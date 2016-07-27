@@ -1,0 +1,35 @@
+{# app/Resources/views/admin/activity.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+
+{% block body %}
+<div class="container">
+        <div class="row header">
+            <div class="col-md-8 col-md-offset-2 highlighted">
+                <p class="text-right">
+                    {% if app.user %}
+                        Hello {{ app.user }}!
+                    {% else %}
+                        <a href="/login">Login</a>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/search.js') }}"></script>
+{% endblock %}
