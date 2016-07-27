@@ -111,12 +111,14 @@ class MobileController extends Controller {
     }
     
     /**
-     * @Route("/user/retrieve/{id_user}")
+     * @Route("/user/retrieve/{id_user}/{token}")
      */
-    public function retrieveActivityDetailsAction(Request $request, $id_user) {
+    public function retrieveActivityDetailsAction(Request $request, $id_user, $token) {
         $activity = $this->getDoctrine()
                          ->getRepository('AppBundle:Activity')
                          ->findAll()[0];
+        
+        // TODO: check the token
         
         return new JsonResponse(array(
             'title' => $activity->getDescription(),
