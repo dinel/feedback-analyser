@@ -9,8 +9,8 @@
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-        <field name="mobile_token" type="string" length="100" />
-        <field name="points" type="integer" />
+        <field name="mobile_token" type="string" length="100" nullable="true" />
+        <field name="points" type="integer" nullable="true" />
         <one-to-many field="feedbacks" target-entity="AppBundle\Entity\Feedback" mapped-by="user" />
     </entity>
 
