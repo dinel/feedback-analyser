@@ -52,6 +52,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->feedbacks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->points = 0;
     }
 
     /**
