@@ -29,6 +29,29 @@ class User extends BaseUser
      * @var int $id
      */
     protected $id;
+    
+    /**
+     * @var string $mobile_token
+     */
+    protected $mobile_token;
+    
+    /**
+     * @var int $points
+     */
+    protected $points;
+    
+    /**
+     * @var array $feedbacks
+     */
+    protected $feedbacks;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->feedbacks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -38,5 +61,46 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Get points
+     * 
+     * @return int $points
+     */
+    public function getPoints() 
+    {
+        return $this->points;
+    }
+    
+    /**
+     * Set points
+     * 
+     * @return int $points
+     */
+    public function setPoints($points) {
+        $this->points = $points;
+        
+        return $this->points;
+    }
+
+    /**
+     * Get the mobile token
+     */
+    public function getMobileToken() 
+    {        
+        return $this->mobile_token;
+    }  
+    
+    public function setMobileToken() {
+        $this->mobile_token = md5(str_shuffle(date("Y-m-d h:i:sa")  . $this->getUsername()));
+    }    
+
+    /**
+     * 
+     * @param \AppBundle\Entity\Feedback $feedback
+     */    
+    public function addFeedback(\AppBundle\Entity\Feedback $feedback) {
+        $this->feedbacks[] = $feedback;
     }
 }
