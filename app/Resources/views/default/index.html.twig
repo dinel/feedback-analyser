@@ -23,11 +23,13 @@
             <div class="col-md-8 col-md-offset-2">
                 <h2>Activities</h2>
                 {% for activity in activities %}
+                    <div style="margin-top: 1em;">
                     <b>{{ activity.name }}</b> on {{activity.date|date("d/m/Y")}}<br/>
                     Description: {{ activity.description }}<br/>
                     Number of feedbacks received: {{ activity.feedbacks | length }}<br/>
                     <a href="{{ path('edit_activity', {'id': activity.id}) }}">Edit</a>
                     <a href="{{ path('analyse_activity', {'id': activity.id}) }}">Analyse</a>
+                    </div>
                 {% endfor %}
             </div>
         </div>
