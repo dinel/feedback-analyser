@@ -46,7 +46,7 @@ class Activity {
     protected $name;  
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=1024)
      */
     protected $description;  
     
