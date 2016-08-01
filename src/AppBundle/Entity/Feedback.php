@@ -41,7 +41,7 @@ class Feedback {
     protected $id;
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $text;  
         
@@ -61,6 +61,14 @@ class Feedback {
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
+    
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $jsonAnalysis;
+        
+    private $header = array("Content-type: application/json", "X-Watson-Learning-Opt-Out: 1");
+    private $url = "https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&sentences=false";
 
     /**
      * Get id
@@ -148,5 +156,51 @@ class Feedback {
         $this->user = $user;
         
         return $this;
+    }
+
+    /**
+     * Set jsonAnalysis
+     *
+     * @return Feedback
+     */
+    public function setJsonAnalysis()
+    {
+        $conn = curl_init();
+        
+        curl_setopt($conn, CURLOPT_HTTPHEADER, $this->header); 
+        $user_pass = $this->container->getParameter('watson_user') . ":"
+                . $this->container->getParameter('watson_password');
+        curl_setopt($conn, CURLOPT_USERPWD, $user_pass);
+        curl_setopt($conn, CURLOPT_POST, 1);
+        curl_setopt($conn, CURLOPT_URL, $this->url);
+        curl_setopt($conn, CURLOPT_RETURNTRANSFER, 1);
+        
+        $body = json_encode(array("text" => $this->getText()));        
+        curl_setopt($conn, CURLOPT_POSTFIELDS, $body);
+        
+        $this->jsonAnalysis = curl_exec($conn);
+        curl_close($conn);
+
+        return $this;
+    }
+
+    /**
+     * Get jsonAnalysis
+     *
+     * @return string 
+     */
+    public function getJsonAnalysis()
+    {
+        return $this->jsonAnalysis;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
