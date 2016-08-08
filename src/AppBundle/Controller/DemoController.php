@@ -36,7 +36,7 @@ class DemoController extends Controller
     public function createDemoUsersAction() {
         $em = $this->getDoctrine()->getManager();
         for($i = 0; $i < 50; $i++) {
-            $user = new \Application\Sonata\UserBundle\Entity\User();
+            $user = new \AppBundle\Entity\User();
             $user->setUserName("user" . ($i + 1));
             $user->setPassword("1234567");  
             $user->setEmail("user" . ($i + 1) . "@u.com");
@@ -51,25 +51,29 @@ class DemoController extends Controller
      * @Route("/demo/import_texts/{id_activity}")
      */
     public function importTextAction($id_activity) {
+        set_time_limit(0);
+        
         $activity = $this->getDoctrine()
                          ->getRepository('AppBundle:Activity')
                          ->find($id_activity);
         
-        $handle = fopen("/home/dinel/Projects/feedback_analyser/Sport1.txt", "r");
+        $handle = fopen("/home/dinel/Projects/feedback_analyser/text.txt", "r");
         if ($handle) {
-            $id_user = 2;
+            $counter = 0;
+            $user_ids = range(2,51);
+            shuffle($user_ids);
             $em = $this->getDoctrine()->getManager();
             while (($line = fgets($handle)) !== false) {
                 $feedback = new \AppBundle\Entity\Feedback();
                 
                 $user = $this->getDoctrine()
-                     ->getRepository('Application\Sonata\UserBundle\Entity\User')
-                     ->find($id_user++);
+                     ->getRepository('AppBundle:User')
+                     ->find($user_ids[$counter++]);
                 $feedback->setText($line);
                 $feedback->setUser($user);                
                 $feedback->setActivity($activity);
                 $feedback->setDate(new \DateTime("now"));
-                $feedback->setJsonAnalysis();
+                $feedback->setJsonAnalysis($this->container);
                 $activity->addFeedback($feedback);
                 
                 $em->persist($feedback);
