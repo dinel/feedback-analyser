@@ -44,6 +44,8 @@ class DefaultController extends Controller
      */
     public function createActivityAction(Request $request) {
         $activity = new \AppBundle\Entity\Activity();
+        $activity->setDate(new \DateTime("now"));
+        
         return $this->processActivity($activity, $request);
     }
     
