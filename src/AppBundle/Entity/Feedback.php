@@ -162,13 +162,13 @@ class Feedback {
      *
      * @return Feedback
      */
-    public function setJsonAnalysis()
+    public function setJsonAnalysis($container)
     {
         $conn = curl_init();
         
         curl_setopt($conn, CURLOPT_HTTPHEADER, $this->header); 
-        $user_pass = $this->container->getParameter('watson_user') . ":"
-                . $this->container->getParameter('watson_password');
+        $user_pass = $container->getParameter('watson_user') . ":"
+                . $container->getParameter('watson_passwd');
         curl_setopt($conn, CURLOPT_USERPWD, $user_pass);
         curl_setopt($conn, CURLOPT_POST, 1);
         curl_setopt($conn, CURLOPT_URL, $this->url);
