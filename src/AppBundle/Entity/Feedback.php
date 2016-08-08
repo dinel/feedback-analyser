@@ -20,7 +20,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Application\Sonata\UserBundle\Entity\User;
 
 /**
  * Description of Feedback
@@ -57,7 +56,7 @@ class Feedback {
     protected $activity;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="tokens")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="tokens")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -152,7 +151,7 @@ class Feedback {
     /**
      * Set user
      */
-    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null) {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
         
         return $this;
@@ -197,7 +196,7 @@ class Feedback {
     /**
      * Get user
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return \AppBundle\Entity\User 
      */
     public function getUser()
     {
