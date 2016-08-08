@@ -50,19 +50,19 @@ class Feedback {
     protected $date;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Activity", inversedBy="tokens")
+     * @ORM\ManyToOne(targetEntity="Activity", inversedBy="feedbacks")
      * @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
      */
     protected $activity;
     
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="tokens")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="feedbacks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
     
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $jsonAnalysis;
         
