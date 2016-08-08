@@ -23,6 +23,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer;
+
 class DefaultController extends Controller
 {
     /**
@@ -93,10 +95,14 @@ class DefaultController extends Controller
                     ));                                        
                 }
             }
-        }        
+        }
         
-        return $this->render('analysis/tone.html.twig', array(
+        // produce frequency list
+        $freq_list = $this->produceFrequencyList($activity);
+        
+        return $this->render('analysis/summary.html.twig', array(
                 'statistics' => $statistics,
+                'freq_list' => $freq_list,
         ));
     }
     
@@ -181,5 +187,45 @@ class DefaultController extends Controller
         return $this->render('admin/feedback.html.twig', array(
                 'form' => $form->createView(),
         ));
+    }
+    
+    private function produceFrequencyList($activity) {
+        $tokenizer = new WhitespaceAndPunctuationTokenizer();
+        $freq_list = array();
+        $stopwords = $this->getStopList();
+        
+        foreach($activity->getFeedbacks() as $feedback) {
+            $a_text = $tokenizer->tokenize($feedback->getText());
+            foreach ($a_text as $word) {
+                if(array_key_exists(strtolower($word), $stopwords) ||
+                   stristr(",.?!'’:“”-_–…universityday", $word)) {
+                    continue;
+                }
+                
+                if(! array_key_exists(strtolower($word), $freq_list)) {
+                    $freq_list[strtolower($word)] = 0;
+                }
+                $freq_list[strtolower($word)]++;
+            }
+        }
+        
+        arsort($freq_list, SORT_NUMERIC);
+        
+        return $freq_list;
+    }
+    
+    private function getStopList() {
+        $stopwords = array();
+        $kernel = $this->get('kernel');
+        $path = $kernel->locateResource('@AppBundle/Controller/english');
+        
+        $handle = fopen($path, "r");
+        if($handle) {
+            while (($line = fgets($handle)) !== false) {
+                $stopwords[trim($line)] = 1;
+            }
+        }
+        
+        return $stopwords;
     }
 }
