@@ -78,7 +78,7 @@ class MobileController extends Controller {
      */
     public function submitFeedbackAction(Request $request, $id_user, $token, $id_activity, $text) {
         $user = $this->getDoctrine()
-                     ->getRepository('Application\Sonata\UserBundle\Entity\User')
+                     ->getRepository('AppBundle\Entity\User')
                      ->find($id_user);
         
         if($user && $user->getMobileToken() === $token) {
