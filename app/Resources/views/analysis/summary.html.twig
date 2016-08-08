@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jqcloud2/dist/jqcloud.min.css') }}">
+{% endblock stylesheets %}
+
+{% block body %}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+</script>
+
+<div class="container">
+        <div class="row header">
+            <div class="col-md-8 col-md-offset-2 highlighted">
+                <p class="text-right">
+                    {% if app.user %}
+                        Hello {{ app.user }}!
+                    {% else %}
+                        <a href="/login">Login</a>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+{% for key,stat in statistics %}
+<script>
+    google.charts.setOnLoadCallback(drawChart{{key|replace(' ','_')}});
+
+    function drawChart{{key|replace(' ','_')}}() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Tone');
+        data.addColumn('number', '');
+
+        data.addRows([
+           ['Min', {{stat[2]}}],
+           ['Average', {{stat[0]/stat[1]}}],
+           ['Max', {{stat[3]}}],
+        ]);
+
+
+        var options = {'title':'{{key}}',
+                   'width':350,
+                   'height':300,
+                   legend: {position: 'none'}
+               };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_{{key|replace(' ','_')}}'));
+        chart.draw(data, options);
+    }
+    </script>
+                    
+    <div style="display: inline-block" id="chart_div_{{key|replace(' ','_')}}"></div>
+{% endfor %}
+<div style="display: inline-block">&nbsp;</div>
+                
+            </div>
+        </div>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2 highlighted">
+        <div style="border: thin black solid;" id="keywords"></div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/vendor/jqcloud2/dist/jqcloud.min.js') }}"></script>
+    <script>
+        var words = [
+            {% for word, freq in freq_list|slice(0,40) %}
+                    {text: '{{word}}', weight: {{freq}} },
+            {% endfor %}                
+        ];
+
+        $('#keywords').jQCloud(words,  {
+                    width: 800,
+                    height: 500,
+                    //steps: 40
+        });
+    </script>
+{% endblock %}
