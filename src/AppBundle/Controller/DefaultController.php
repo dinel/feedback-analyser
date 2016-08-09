@@ -96,17 +96,29 @@ class DefaultController extends Controller
                 }
             }
         }
-        
-        // produce frequency list
-        $freq_list = $this->produceFrequencyList($activity);
-        
+                
         return $this->render('analysis/summary.html.twig', array(
                 'statistics' => $statistics,
-                'freq_list' => $freq_list,
+                'activity' => $activity,
         ));
     }
     
     /**
+     * @Route("/analysis/frequency_list/{id_activity}")
+     */
+    public function getFrequencyListAction($id_activity) {
+        $activity = $this->getDoctrine()
+                         ->getRepository('AppBundle:Activity')
+                         ->find($id_activity);
+               // produce frequency list
+        $freq_list = $this->produceFrequencyList($activity);
+        
+        return $this->render('analysis/word_cloud.html.twig', array(                
+                'freq_list' => $freq_list,
+        ));
+    }
+
+        /**
      * @Route("/feedback/add/{id_activity}")
      */
     public function addFeedbackAction(Request $request, $id_activity) {
