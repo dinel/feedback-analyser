@@ -1,0 +1,24 @@
+{# empty Twig template #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jqcloud2/dist/jqcloud.min.css') }}">
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var words = [
+            {% for word, freq in freq_list|slice(0,40) %}
+                    {text: '{{word}}', weight: {{freq}} },
+            {% endfor %}                
+        ];
+        
+        $('#keywords').jQCloud(words,  {
+                    width: 800,
+                    height: 350,
+        });        
+    </script>
+{% endblock %}
