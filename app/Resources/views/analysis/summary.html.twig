@@ -29,12 +29,22 @@
             </p>
         </div>
     </div>
-                
-                
+
     <div class="row">
+        <div class="col-md-2"
+             ><h3>Activity</h3>
+        </div>
+        <div class="col-md-8 indented3">
+            <strong>{{ activity.name }}</strong><br/>            
+            <i>{{ activity.description }}</i> <br/><br>
+            Date: {{ activity.date|date('d/m/Y') }}<br/>
+            No feedbacks: {{ activity.feedbacks|length }}
+        </div>
+    </div>
+            
+    <div class="row voffset4">
         <div class="col-md-2">
-            <h3>Word cloud</h3>
-            <div><i>Provides a quick overview of the most used words</i></div>
+            <h3>Word cloud</h3>            
         </div>
         <div class="col-md-8">            
             <div id="keywords"></div>
@@ -43,13 +53,15 @@
                             {'id_activity': activity.id}), 
                             {'default': 'misc/wait.html.twig'}) 
             }}
-                        
             <div class="text-right">
                 <a href="#" data-toggle="popover" title="About word clouds" 
-                   data-content="This word cloud shows the 40 most frequent words mentioned by participants. Stop words such as 'the' and 'and' were removed. We removed also 'university' and 'day' ">
+                   data-content="This word cloud shows the 40 most frequent words 
+                   mentioned by participants. Stop words such as 'the' and 'and' 
+                   were removed. We removed also 'university' and 'day'. Click on 
+                   the word if you want to see the context in which it is used. ">
                     <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
                 </a>
-            </div>            
+            </div>
         </div>
     </div>
             
