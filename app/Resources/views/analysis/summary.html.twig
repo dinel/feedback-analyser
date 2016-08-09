@@ -2,30 +2,63 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('assets/vendor/jqcloud2/dist/jqcloud.min.css') }}">
+    <style type="text/css">
+    .popover{
+        width:600px;
+    }
+    </style>
 {% endblock stylesheets %}
 
 {% block body %}
-
+        
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://use.fontawesome.com/451e8f405a.js"></script>
 <script>
     google.charts.load('current', {packages: ['corechart', 'bar']});
 </script>
 
 <div class="container">
-        <div class="row header">
-            <div class="col-md-8 col-md-offset-2 highlighted">
-                <p class="text-right">
-                    {% if app.user %}
-                        Hello {{ app.user }}!
-                    {% else %}
-                        <a href="/login">Login</a>
-                    {% endif %}
-                </p>
-            </div>
+    <div class="row header">
+        <div class="col-md-8 col-md-offset-2 highlighted">
+            <p class="text-right">
+                {% if app.user %}
+                    Hello {{ app.user }}!
+                {% else %}
+                    <a href="/login">Login</a>
+                {% endif %}
+            </p>
         </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+    </div>
+                
+                
+    <div class="row">
+        <div class="col-md-2">
+            <h3>Word cloud</h3>
+            <div><i>Provides a quick overview of the most used words</i></div>
+        </div>
+        <div class="col-md-8">            
+            <div id="keywords"></div>
+            {{ render_hinclude(controller(
+                            'AppBundle:Default:getFrequencyList', 
+                            {'id_activity': activity.id}), 
+                            {'default': 'misc/wait.html.twig'}) 
+            }}
+                        
+            <div class="text-right">
+                <a href="#" data-toggle="popover" title="About word clouds" 
+                   data-content="This word cloud shows the 40 most frequent words mentioned by participants. Stop words such as 'the' and 'and' were removed. We removed also 'university' and 'day' ">
+                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+                </a>
+            </div>            
+        </div>
+    </div>
+            
+    <div class="row">
+        <div class="col-md-2">
+            <h3>Tone analysis</h3>
+            <div><i>Uses linguistic analysis to detect three types of tones from text: emotion, social tendencies, and language style</i></div>
+        </div>
+        <div class="col-md-8">
 
 {% for key,stat in statistics %}
 <script>
@@ -56,33 +89,19 @@
                     
     <div style="display: inline-block" id="chart_div_{{key|replace(' ','_')}}"></div>
 {% endfor %}
-<div style="display: inline-block">&nbsp;</div>
                 
-            </div>
         </div>
-
-<div class="row">
-    <div class="col-md-8 col-md-offset-2 highlighted">
-        <div style="border: thin black solid;" id="keywords"></div>
     </div>
-</div>
 </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('assets/vendor/jqcloud2/dist/jqcloud.min.js') }}"></script>
     <script>
-        var words = [
-            {% for word, freq in freq_list|slice(0,40) %}
-                    {text: '{{word}}', weight: {{freq}} },
-            {% endfor %}                
-        ];
-
-        $('#keywords').jQCloud(words,  {
-                    width: 800,
-                    height: 500,
-                    //steps: 40
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
         });
     </script>
+    <script src="{{ asset('assets/vendor/jqcloud2/dist/jqcloud.min.js') }}"></script>
+    <script src="{{ asset('js/hinclude.js') }}"></script>
 {% endblock %}
