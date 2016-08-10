@@ -11,8 +11,8 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
         
     role_hierarchy:
-        ROLE_EDITOR:    ROLE_USER
-        ROLE_ADMIN:     ROLE_EDITOR
+        ROLE_ANALYST:    ROLE_USER
+        ROLE_ADMIN:      ROLE_ANALYST
 
     firewalls:
         # Disabling the security for the web debug toolbar, the profiler and Assetic.
