@@ -210,7 +210,7 @@ class DefaultController extends Controller
             foreach($activity->getFeedbacks() as $feedback) {
                 $pos = -1;
                 while(($pos = stripos($feedback->getText(), " " . $keyword . " ", $pos + 1)) !== FALSE) {
-                    $concordance = substr($feedback->getText(), max(0, $pos - $max_len), max($max_len, $max_len - $pos))
+                    $concordance = substr($feedback->getText(), max(0, $pos - $max_len), min($max_len, $pos))
                                 . " <strong>" . $keyword . "</strong> "
                                 . substr($feedback->getText(), $pos + strlen($keyword) + 2, $max_len);
                     $concordances[] = array($this->trim($concordance), $feedback->getId());
