@@ -95,8 +95,8 @@
             <h4>Emotion</h4>
          </div>
         <div class="col-md-8">
-            <div class="text-right">
-                <a data-toggle="popover" title="Anger"
+            {% include 'analysis/tone_graph.html.twig' with {'key':'Anger', 'stat':statistics['Anger']} %}
+            <a data-toggle="popover" title="Anger"
                    data-content="Evoked due to injustice, 
                    conflict, humiliation, negligence or betrayal. If anger 
                    is active, the individual attacks the target, verbally or 
@@ -104,69 +104,59 @@
                    and feels tension and hostility. Values over 0.75 are more
                    likely to be perceived as angry.">
                     <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Anger', 'stat':statistics['Anger']} %}
+            </a>
         </div>
     </div>
 
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
-            <div class="text-right">
-                <a data-toggle="popover" title="Disgust"
+            {% include 'analysis/tone_graph.html.twig' with {'key':'Disgust', 'stat':statistics['Disgust']} %}
+            <a data-toggle="popover" title="Disgust"
                    data-content="An emotional response of 
                    revulsion to something considered offensive or unpleasant. It 
                    is a sensation that refers to something revolting. Values over 
                    0.75 are more likely to be perceived as disgusted.">
                     <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Disgust', 'stat':statistics['Disgust']} %}
+            </a>
         </div>
     </div>
         
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
-            <div class="text-right">
-                <a data-toggle="popover" title="Fear"
+            {% include 'analysis/tone_graph.html.twig' with {'key':'Fear', 'stat':statistics['Fear']} %}
+            <a data-toggle="popover" title="Fear"
                    data-content="A response to impending danger. It is a survival 
                    mechanism that is a reaction to some negative stimulus. It may 
                    be a mild caution or an extreme phobia. Values over 
                    0.75 are more likely to be perceived as scared.">
                     <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Fear', 'stat':statistics['Fear']} %}
+            </a>
         </div>
     </div>
         
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
-            <div class="text-right">
-                <a data-toggle="popover" title="Joy"
+            {% include 'analysis/tone_graph.html.twig' with {'key':'Joy', 'stat':statistics['Joy']} %}
+            <a data-toggle="popover" title="Joy"
                    data-content="Joy or happiness has shades of enjoyment, 
                    satisfaction and pleasure. There is a sense of well-being, 
                    inner peace, love, safety and contentment. Higher values 
                    indicate more joyful.">
                     <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Joy', 'stat':statistics['Joy']} %}
+            </a>
         </div>
     </div>
         
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
-            <div class="text-right">
-                <a href="#" data-toggle="popover" title="Sadness"
+            {% include 'analysis/tone_graph.html.twig' with {'key':'Sadness', 'stat':statistics['Sadness']} %}
+            <a href="#" data-toggle="popover" title="Sadness"
                    data-content="Indicates a feeling of loss and disadvantage. When 
                    a person can be observed to be quiet, less energetic and withdrawn, 
                    it may be inferred that sadness exists. Values over 0.75 are more
                    likely to be perceived as sad.">
                     <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Sadness', 'stat':statistics['Sadness']} %}
+            </a>
         </div>
     </div>
 <!-- End emotion -->
@@ -193,77 +183,66 @@
 
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
-            <div class="text-right">
-                <a data-toggle="popover" title="Openness"
+            {% include 'analysis/tone_graph.html.twig' with {'key':'Openness', 'stat':statistics['Openness']} %}
+            <a data-toggle="popover" title="Openness"
                    data-content="The extent a person is open to experience a variety 
                    of activities. 
                    Value over 0.75 more likely to be perceived as 
                    as intellectual, curious, emotionally-aware, imaginative, willing 
                    to try new things, appreciating beauty, or open to change.">
                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Openness', 'stat':statistics['Openness']} %}
+            </a>
         </div>
     </div>
 
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
-            <div class="text-right">
-                <a data-toggle="popover" title="Conscientiousness"
+            {% include 'analysis/tone_graph.html.twig' with {'key':'Conscientiousness', 'stat':statistics['Conscientiousness']} %}
+            <a data-toggle="popover" title="Conscientiousness"
                    data-content="The tendency to act in an organized or thoughtful way. 
                    Value over 0.75 more likely to be perceived as 
                    perceived as disciplined, dutiful, achievement-striving, confident, 
                    driven, or organized.">
                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Conscientiousness', 'stat':statistics['Conscientiousness']} %}
+            </a>
         </div>
     </div>
         
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
-            <div class="text-right">
-                <a data-toggle="popover" title="Extraversion"
+            {% include 'analysis/tone_graph.html.twig' with {'key':'Extraversion', 'stat':statistics['Extraversion']} %}
+            <a data-toggle="popover" title="Extraversion"
                    data-content="The tendency to seek stimulation in the company of 
                    others. Value over 0.75 more likely to be perceived as 
                     as engaging, seeking attention, needy, assertive, outgoing, 
                     sociable, cheerful, excitement-seeking, or busy.">
                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Extraversion', 'stat':statistics['Extraversion']} %}
+            </a>
         </div>
     </div>
         
         
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
-            <div class="text-right">
-                <a data-toggle="popover" title="Agreeableness"
+            {% include 'analysis/tone_graph.html.twig' with {'key':'Agreeableness', 'stat':statistics['Agreeableness']} %}
+            <a data-toggle="popover" title="Agreeableness"
                    data-content="The tendency to be compassionate and cooperative towards others.">
                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Agreeableness', 'stat':statistics['Agreeableness']} %}
+            </a>
         </div>
     </div>
         
         
     <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="text-right">
-                <a data-toggle="popover" title="Emotional range"
+        <div class="col-md-8 col-md-offset-2">            
+            {% include 'analysis/tone_graph.html.twig' with {'key':'Emotional Range', 'stat':statistics['Emotional Range']} %}
+            <a data-toggle="popover" title="Emotional range"
                    data-content="The extent a person's emotion is sensitive to 
                    the environment. Value over 0.75 more likely to be perceived as 
                    concerned, frustrated, angry, passionate, upset, stressed, insecure, 
                    or impulsive.">
                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>
-            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Emotional Range', 'stat':statistics['Emotional Range']} %}
+            </a>
         </div>
     </div>
 <!-- End social tone -->
@@ -287,29 +266,25 @@
 
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
-            <div class="text-right">
-                <a data-toggle="popover" title="Analytical"
-                   data-content="A person's reasoning and analytical attitude about things.
-                   Value over 0.75 more likely to be perceived as 
-                   as  intellectual, rational, systematic, emotionless, or impersonal.">
-                   <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>            
             {% include 'analysis/tone_graph.html.twig' with {'key':'Analytical', 'stat':statistics['Analytical']} %}
+            <a data-toggle="popover" title="Analytical"
+               data-content="A person's reasoning and analytical attitude about things.
+               Value over 0.75 more likely to be perceived as 
+               as  intellectual, rational, systematic, emotionless, or impersonal.">
+               <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+            </a>            
         </div>
     </div>
 
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
-            <div class="text-right">
-                <a data-toggle="popover" title="Confident"
+            {% include 'analysis/tone_graph.html.twig' with {'key':'Confident', 'stat':statistics['Confident']} %}
+            <a data-toggle="popover" title="Confident"
                    data-content="A persons degree of certainty. 
                    Value over 0.75 more likely to be perceived as 
                    assured, collected, hopeful, or egotistical.">
                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Confident', 'stat':statistics['Confident']} %}
+            </a>
         </div>
     </div>
         
@@ -326,36 +301,6 @@
     </div>
             
 <!-- End language tone -->
-
-{% for key,stat in statistics %}
-<script>
-    google.charts.setOnLoadCallback(drawChart{{key|replace(' ','_')}});
-
-    function drawChart{{key|replace(' ','_')}}() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Tone');
-        data.addColumn('number', '');
-
-        data.addRows([
-           ['Min', {{stat[2]}}],
-           ['Average', {{stat[0]/stat[1]}}],
-           ['Max', {{stat[3]}}],
-        ]);
-
-
-        var options = {'title':'{{key}}',
-                   'width':350,
-                   'height':300,
-                   legend: {position: 'none'}
-               };
-
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_{{key|replace(' ','_')}}'));
-        chart.draw(data, options);
-    }
-    </script>
-                    
-    <div style="display: inline-block" id="chart_div_{{key|replace(' ','_')}}"></div>
-{% endfor %}
                 
         </div>
     </div>
