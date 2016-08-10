@@ -156,7 +156,7 @@ class DefaultController extends Controller
         ));
     }
 
-        /**
+    /**
      * @Route("/feedback/add/{id_activity}")
      */
     public function addFeedbackAction(Request $request, $id_activity) {
@@ -169,7 +169,32 @@ class DefaultController extends Controller
         if($activity) {
             return $this->editFeedback($activity, $feedback, $request);
         }
-    }    
+    }
+
+    /**
+     * @Route("/feedback/display/{id_feedback}")
+     */
+    public function displayFeedbackAction($id_feedback) {
+        $feedback = $this->getDoctrine()
+                         ->getRepository('AppBundle:Feedback')
+                         ->find($id_feedback);
+        
+        $tones = array();
+        
+        $analysis = json_decode($feedback->getJsonAnalysis(), true)["document_tone"]["tone_categories"];
+            foreach($analysis as $values) {
+                foreach($values["tones"] as $tone) {                    
+                    $tones[$tone["tone_name"]] = $tone["score"];
+                }
+            }
+        
+        if($feedback) {
+            return $this->render('analysis/display_feedback.html.twig', array(
+                'feedback' => $feedback,
+                'tones' => $tones,
+            ));
+        }
+    }
 
 
     /************************************************************************
