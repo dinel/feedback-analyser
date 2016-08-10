@@ -19,24 +19,52 @@
                 </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h2>Activities</h2>
-                {% for activity in activities %}
-                    <div style="margin-top: 1em;">
-                    <b>{{ activity.name }}</b> on {{activity.date|date("d/m/Y")}}<br/>
-                    Description: {{ activity.description }}<br/>
-                    Number of feedbacks received: {{ activity.feedbacks | length }}<br/>
-                    <a href="{{ path('edit_activity', {'id': activity.id}) }}">Edit</a>
-                    <a href="{{ path('analyse_activity', {'id_activity': activity.id}) }}">Analyse</a>
-                    </div>
-                {% endfor %}
+                
+        <div class="row voffset4">
+            <div class="col-md-12 text-center">
+                <h2>Welcome to dashboard!</h2>
             </div>
         </div>
+                
+        {% if is_granted('ROLE_ANALYST') %}
+        <div class="row voffset5">
+            <div class="col-md-5 with-border">
+                <h3>Activities</h3>
+                {% for activity in activities %}
+                    <!-- this is an ugly hack. Make sure remove after the testing is done -->
+                    {% if activity.id != 1 %}
+                        <div style="margin-top: 1em;">
+                        <b>{{ activity.name }}</b> on {{activity.date|date("d/m/Y")}}<br/>
+                        Description: {{ activity.description }}<br/>
+                        Number of feedbacks received: {{ activity.feedbacks | length }}<br/>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('edit_activity', {'id': activity.id}) }}" class="btn btn-default" type="button">Edit</a>
+                        {% endif %}
+                        <a href="{{ path('analyse_activity', {'id_activity': activity.id}) }}" class="btn btn-default" type="button">Analyse</a>
+                        <a id="c{{ activity.id }}" class="comparison btn btn-default" type="button">Add for comparison</a>
+                        </div>
+                    {% endif %}
+                    <!-- end of ugly hack -->
+                {% endfor %}
+                <div class="voffset4"><a id="compare" class="btn btn-default" type="button">Compare activities</a></div>
+            </div>
+
+            {% if is_granted('ROLE_ANALYST') %}
+            <div class="col-md-5 col-md-offset-2 with-border">
+                <h3>Users</h3>
+                <div class="list-group voffset3">
+                {% for user in users|slice(0,10) %}
+                    <a href="#" class="list-group-item">{{ user.username }}<span class="badge">{{ user.points }}</span></a>
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
 </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/search.js') }}"></script>
+    <script src="{{ asset('js/landing.js') }}"></script>
 {% endblock %}
