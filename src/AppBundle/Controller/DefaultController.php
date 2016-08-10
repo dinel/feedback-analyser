@@ -153,6 +153,7 @@ class DefaultController extends Controller
         
         return $this->render('analysis/word_cloud.html.twig', array(                
                 'freq_list' => $freq_list,
+                'id_activity' => $id_activity,
         ));
     }
 
