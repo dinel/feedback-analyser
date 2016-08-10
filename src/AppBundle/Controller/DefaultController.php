@@ -172,7 +172,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/feedback/display/{id_feedback}")
+     * @Route("/feedback/display/{id_feedback}", name="display_feedback")
      */
     public function displayFeedbackAction($id_feedback) {
         $feedback = $this->getDoctrine()
@@ -195,6 +195,34 @@ class DefaultController extends Controller
             ));
         }
     }
+    
+    /**
+     * @Route("/analysis/keyword/{id_activity}/{keyword}", name="display_keyword")
+     */
+    public function displayKeywordAction($id_activity, $keyword) {
+        $activity = $this->getDoctrine()
+                         ->getRepository('AppBundle:Activity')
+                         ->find($id_activity);
+        $concordances = array();
+        $max_len = 50;
+        
+        if($activity) {
+            foreach($activity->getFeedbacks() as $feedback) {
+                $pos = -1;
+                while(($pos = stripos($feedback->getText(), " " . $keyword . " ", $pos + 1)) !== FALSE) {
+                    $concordance = substr($feedback->getText(), max(0, $pos - $max_len), max($max_len, $max_len - $pos))
+                                . " <strong>" . $keyword . "</strong> "
+                                . substr($feedback->getText(), $pos + strlen($keyword) + 2, $max_len);
+                    $concordances[] = array($this->trim($concordance), $feedback->getId());
+                }
+            }
+            
+            return $this->render('analysis/display_keyword.html.twig', array(
+                'activity' => $activity,
+                'concordances' => $concordances,
+            ));
+        }
+    }
 
 
     /************************************************************************
@@ -203,6 +231,12 @@ class DefaultController extends Controller
      * 
      ************************************************************************/
     
+    private function trim($str) {
+        $start = strpos($str, " ");
+        $end = strrpos($str, " ");
+        return substr($str, $start, $end - $start + 1);
+    }
+
     private function processActivity($activity, $request) {
         $form = $this->createFormBuilder($activity)
                      ->add('name', 'text')
