@@ -36,8 +36,13 @@ class DefaultController extends Controller
                            ->getRepository('AppBundle:Activity')
                            ->findAll();
         
+        $users = $this->getDoctrine()
+                      ->getRepository('AppBundle:User')
+                      ->findBy([], ['points' => 'DESC']);
+                
         return $this->render('default/index.html.twig', array(
             'activities' => $activities,
+            'users' => $users,
         ));
     }
     
