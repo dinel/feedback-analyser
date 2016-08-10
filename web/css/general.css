@@ -34,3 +34,12 @@ h1, h2, h3, h4 {
 body {
     font-size: 16px;
 }
+
+.with-border {
+    border: black thin dotted;
+    padding: 2em;
+}
+
+.selected {
+    background-color: greenyellow;
+}
