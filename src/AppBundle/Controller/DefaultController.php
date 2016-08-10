@@ -201,6 +201,7 @@ class DefaultController extends Controller
      * @Route("/analysis/keyword/{id_activity}/{keyword}", name="display_keyword")
      */
     public function displayKeywordAction($id_activity, $keyword) {
+        $tokenizer = new WhitespaceAndPunctuationTokenizer();
         $activity = $this->getDoctrine()
                          ->getRepository('AppBundle:Activity')
                          ->find($id_activity);
@@ -209,13 +210,28 @@ class DefaultController extends Controller
         
         if($activity) {
             foreach($activity->getFeedbacks() as $feedback) {
-                $pos = -1;
-                while(($pos = stripos($feedback->getText(), " " . $keyword . " ", $pos + 1)) !== FALSE) {
-                    $concordance = substr($feedback->getText(), max(0, $pos - $max_len), min($max_len, $pos))
-                                . " <strong>" . $keyword . "</strong> "
-                                . substr($feedback->getText(), $pos + strlen($keyword) + 2, $max_len);
-                    $concordances[] = array($this->trim($concordance), $feedback->getId());
-                }
+                $a_text = $tokenizer->tokenize($feedback->getText());
+                
+                for($i = 0; $i < count($a_text); $i++) {
+                    if(strtolower($a_text[$i]) === strtolower($keyword)) {
+                        $pos = $i - 1;
+                        $prev = "";
+                        while($pos >= 0 && strlen($prev . " " . $a_text[$pos]) < $max_len) {
+                            $prev = $a_text[$pos] . " " . $prev;
+                            $pos--;
+                        }
+                        
+                        $pos = $i + 1;
+                        $next = "";
+                        while($pos < count($a_text) && strlen($next . " " . $a_text[$pos]) < $max_len) {
+                            $next .= (" " . $a_text[$pos]);
+                            $pos++;
+                        }
+                        
+                        $concordance = $prev . " <strong>" . $a_text[$i] . "</strong> " . $next;
+                        $concordances[] = array($concordance, $feedback->getId());
+                    }
+                }                
             }
             
             return $this->render('analysis/display_keyword.html.twig', array(
