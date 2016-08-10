@@ -104,6 +104,48 @@ class DefaultController extends Controller
     }
     
     /**
+     * @Route("/activity/tone/{id_activity}/{tone_name}")
+     */
+    public function analyseToneForActivityAction($id_activity, $tone_name) {
+        $activity = $this->getDoctrine()
+                         ->getRepository('AppBundle:Activity')
+                         ->find($id_activity);
+        
+        $s = "";
+        
+        $statistics = array();
+        
+        foreach($activity->getFeedbacks() as $feedback) {
+            $analysis = json_decode($feedback->getJsonAnalysis(), true)["document_tone"]["tone_categories"];
+            foreach($analysis as $tones) {
+                foreach($tones["tones"] as $tone) {
+                    if($tone_name !== $tone["tone_name"]) {
+                        continue;
+                    }
+                    
+                    if(! array_key_exists($tone["tone_name"], $statistics)) {
+                        $statistics[$tone["tone_name"]] = array(0, 0, 2, -1);
+                    }
+                    
+                    $statistics[$tone["tone_name"]][0] += $tone["score"];
+                    $statistics[$tone["tone_name"]][1]++;
+                    $statistics[$tone["tone_name"]][2] = min(array(
+                        $tone["score"], $statistics[$tone["tone_name"]][2]
+                    ));
+                    
+                    $statistics[$tone["tone_name"]][3] = max(array(
+                        $tone["score"], $statistics[$tone["tone_name"]][3]
+                    ));                                        
+                }
+            }
+        }
+                
+        return $this->render('analysis/tone_graph.html.twig', array(
+                'statistics' => $statistics,
+        ));
+    }
+    
+    /**
      * @Route("/analysis/frequency_list/{id_activity}")
      */
     public function getFrequencyListAction($id_activity) {
