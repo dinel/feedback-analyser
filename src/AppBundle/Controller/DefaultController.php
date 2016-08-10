@@ -81,20 +81,16 @@ class DefaultController extends Controller
             foreach($analysis as $tones) {
                 foreach($tones["tones"] as $tone) {
                     if(! array_key_exists($tone["tone_name"], $statistics)) {
-                        $statistics[$tone["tone_name"]] = array(0, 0, 2, -1);
+                        $statistics[$tone["tone_name"]] = array();
                     }
                     
-                    $statistics[$tone["tone_name"]][0] += $tone["score"];
-                    $statistics[$tone["tone_name"]][1]++;
-                    $statistics[$tone["tone_name"]][2] = min(array(
-                        $tone["score"], $statistics[$tone["tone_name"]][2]
-                    ));
-                    
-                    $statistics[$tone["tone_name"]][3] = max(array(
-                        $tone["score"], $statistics[$tone["tone_name"]][3]
-                    ));                                        
+                    $statistics[$tone["tone_name"]][$feedback->getId()] = $tone["score"];
                 }
             }
+        }
+        
+        foreach($statistics as &$stats) {
+            asort($stats);
         }
                 
         return $this->render('analysis/summary.html.twig', array(
