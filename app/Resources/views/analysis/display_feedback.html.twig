@@ -1,0 +1,72 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}    
+{% endblock stylesheets %}
+
+{% block body %}
+
+<div class="container">
+    <div class='row voffset5'>
+        <div class="col-md-2">
+            <h4>Feedback</h4>
+         </div>
+        <div class="col-md-8">
+        {{ feedback.text }}
+        </div>
+    </div>
+        
+    <div class='row voffset4'>
+        <div class="col-md-2">
+            <h4>Activity</h4>
+         </div>
+        <div class="col-md-8">
+        {{ feedback.activity.name }}
+        </div>
+    </div>
+        
+    <div class='row voffset4'>
+        <div class="col-md-2">
+            <h4>Tones</h4>
+         </div>
+        <div class="col-md-8">
+        <ul style="list-style-type: none; margin-left: 0px; padding: 0px;">
+            <li>Emotional tones
+                <ul>
+                {% for key in ['Joy', 'Fear', 'Sadness', 'Disgust', 'Anger'] %}
+                    <li>{{ key }}: {{ tones[key] }}</li>
+                {% endfor %}
+                </ul>
+            </li>
+            <li>Social tones
+                <ul>
+                {% for key in ['Openness', 'Conscientiousness', 'Extraversion', 'Agreeableness', 'Emotional Range'] %}
+                    <li>{{ key }}: {{ tones[key] }}</li>
+                {% endfor %}
+                </ul>                
+            </li>
+            <li>Language tones
+                <ul>
+                {% for key in ['Analytical', 'Confident', 'Tentative'] %}
+                    <li>{{ key }}: {{ tones[key] }}</li>
+                {% endfor %}
+                </ul>                
+            </li>
+        </ul>
+        </div>
+    </div>
+                
+    <div class='row voffset4'>
+        <div class="col-md-2">
+            <h4><a href="javascript:history.go(-1)">[Go Back]</a></h4>
+         </div>
+    </div>
+</div>
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
