@@ -2,17 +2,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <style type="text/css">
-    .popover{
-        width:700px;
-    }
-    </style>
 {% endblock stylesheets %}
 
 {% block body %}
         
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="https://use.fontawesome.com/451e8f405a.js"></script>
 <script>
     google.charts.load('current', {packages: ['corechart', 'bar']});
 </script>
@@ -96,67 +90,35 @@
          </div>
         <div class="col-md-8">
             {% include 'analysis/tone_graph.html.twig' with {'key':'Anger', 'stat':statistics['Anger']} %}
-            <a data-toggle="popover" title="Anger"
-                   data-content="Evoked due to injustice, 
-                   conflict, humiliation, negligence or betrayal. If anger 
-                   is active, the individual attacks the target, verbally or 
-                   physically. If anger is passive, the person silently sulks 
-                   and feels tension and hostility. Values over 0.75 are more
-                   likely to be perceived as angry.">
-                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>
+            {% include 'help/tone_anger.html.twig' with {'size': 'big'} %}
         </div>
     </div>
 
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
             {% include 'analysis/tone_graph.html.twig' with {'key':'Disgust', 'stat':statistics['Disgust']} %}
-            <a data-toggle="popover" title="Disgust"
-                   data-content="An emotional response of 
-                   revulsion to something considered offensive or unpleasant. It 
-                   is a sensation that refers to something revolting. Values over 
-                   0.75 are more likely to be perceived as disgusted.">
-                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>
+            {% include 'help/tone_disgust.html.twig' with {'size': 'big'} %}
         </div>
     </div>
         
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
             {% include 'analysis/tone_graph.html.twig' with {'key':'Fear', 'stat':statistics['Fear']} %}
-            <a data-toggle="popover" title="Fear"
-                   data-content="A response to impending danger. It is a survival 
-                   mechanism that is a reaction to some negative stimulus. It may 
-                   be a mild caution or an extreme phobia. Values over 
-                   0.75 are more likely to be perceived as scared.">
-                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>
+            {% include 'help/tone_fear.html.twig' with {'size': 'big'} %}
         </div>
     </div>
         
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
             {% include 'analysis/tone_graph.html.twig' with {'key':'Joy', 'stat':statistics['Joy']} %}
-            <a data-toggle="popover" title="Joy"
-                   data-content="Joy or happiness has shades of enjoyment, 
-                   satisfaction and pleasure. There is a sense of well-being, 
-                   inner peace, love, safety and contentment. Higher values 
-                   indicate more joyful.">
-                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>
+            {% include 'help/tone_joy.html.twig' with {'size': 'big'} %}
         </div>
     </div>
         
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
             {% include 'analysis/tone_graph.html.twig' with {'key':'Sadness', 'stat':statistics['Sadness']} %}
-            <a href="#" data-toggle="popover" title="Sadness"
-                   data-content="Indicates a feeling of loss and disadvantage. When 
-                   a person can be observed to be quiet, less energetic and withdrawn, 
-                   it may be inferred that sadness exists. Values over 0.75 are more
-                   likely to be perceived as sad.">
-                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>
+            {% include 'help/tone_sadness.html.twig' with {'size': 'big'} %}
         </div>
     </div>
 <!-- End emotion -->
@@ -184,40 +146,21 @@
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
             {% include 'analysis/tone_graph.html.twig' with {'key':'Openness', 'stat':statistics['Openness']} %}
-            <a data-toggle="popover" title="Openness"
-                   data-content="The extent a person is open to experience a variety 
-                   of activities. 
-                   Value over 0.75 more likely to be perceived as 
-                   as intellectual, curious, emotionally-aware, imaginative, willing 
-                   to try new things, appreciating beauty, or open to change.">
-                   <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>
+            {% include 'help/tone_sadness.html.twig' with {'size': 'big'} %}
         </div>
     </div>
 
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
             {% include 'analysis/tone_graph.html.twig' with {'key':'Conscientiousness', 'stat':statistics['Conscientiousness']} %}
-            <a data-toggle="popover" title="Conscientiousness"
-                   data-content="The tendency to act in an organized or thoughtful way. 
-                   Value over 0.75 more likely to be perceived as 
-                   perceived as disciplined, dutiful, achievement-striving, confident, 
-                   driven, or organized.">
-                   <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>
+            {% include 'help/tone_conscientiousness.html.twig' with {'size': 'big'} %}            
         </div>
     </div>
         
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
             {% include 'analysis/tone_graph.html.twig' with {'key':'Extraversion', 'stat':statistics['Extraversion']} %}
-            <a data-toggle="popover" title="Extraversion"
-                   data-content="The tendency to seek stimulation in the company of 
-                   others. Value over 0.75 more likely to be perceived as 
-                    as engaging, seeking attention, needy, assertive, outgoing, 
-                    sociable, cheerful, excitement-seeking, or busy.">
-                   <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>
+            {% include 'help/tone_extraversion.html.twig' with {'size': 'big'} %}                 
         </div>
     </div>
         
@@ -225,10 +168,7 @@
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
             {% include 'analysis/tone_graph.html.twig' with {'key':'Agreeableness', 'stat':statistics['Agreeableness']} %}
-            <a data-toggle="popover" title="Agreeableness"
-                   data-content="The tendency to be compassionate and cooperative towards others.">
-                   <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>
+            {% include 'help/tone_agreeableness.html.twig' with {'size': 'big'} %} 
         </div>
     </div>
         
@@ -236,13 +176,7 @@
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">            
             {% include 'analysis/tone_graph.html.twig' with {'key':'Emotional Range', 'stat':statistics['Emotional Range']} %}
-            <a data-toggle="popover" title="Emotional range"
-                   data-content="The extent a person's emotion is sensitive to 
-                   the environment. Value over 0.75 more likely to be perceived as 
-                   concerned, frustrated, angry, passionate, upset, stressed, insecure, 
-                   or impulsive.">
-                   <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>
+            {% include 'help/tone_emotional_range.html.twig' with {'size': 'big'} %}
         </div>
     </div>
 <!-- End social tone -->
@@ -309,11 +243,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        $(document).ready(function(){
-            $('[data-toggle="popover"]').popover();
-        });
-    </script>
     <script src="{{ asset('assets/vendor/jqcloud2/dist/jqcloud.min.js') }}"></script>
     <script src="{{ asset('js/hinclude.js') }}"></script>
 {% endblock %}
