@@ -161,6 +161,35 @@ class DefaultController extends Controller
                 'id_activity' => $id_activity,
         ));
     }
+    
+    /**
+     * @Route("/analysis/compare/{ids_activities}")
+     */
+    public function compareActivitiesAction($ids_activities) {
+        $summary = array();
+        $tones = array();
+        
+        $activities = explode("-", $ids_activities);
+        foreach($activities as $id_activity) {
+            $a_activity = array();
+            
+            $activity = $this->getDoctrine()
+                             ->getRepository('AppBundle:Activity')
+                             ->find($id_activity);
+            $a_activity[] = $activity;
+            $a_activity[] = $this->produceFrequencyList($activity);
+            foreach($this->getTones($activity) as $tone => $value) {
+                $tones[$tone][] = $value;
+            }
+            
+            $summary[] = $a_activity;
+        }
+        
+        return $this->render('analysis/compare.html.twig', array(
+            'summary' => $summary,
+            'tones' => $tones,
+        ));
+    }
 
     /**
      * @Route("/feedback/add/{id_activity}")
@@ -253,10 +282,31 @@ class DefaultController extends Controller
      * 
      ************************************************************************/
     
-    private function trim($str) {
-        $start = strpos($str, " ");
-        $end = strrpos($str, " ");
-        return substr($str, $start, $end - $start + 1);
+    private function getTones($activity) {
+        $statistics = array();
+        
+        foreach($activity->getFeedbacks() as $feedback) {
+            $analysis = json_decode($feedback->getJsonAnalysis(), true)["document_tone"]["tone_categories"];
+            foreach($analysis as $tones) {
+                foreach($tones["tones"] as $tone) {                    
+                    if(! array_key_exists($tone["tone_name"], $statistics)) {
+                        $statistics[$tone["tone_name"]] = array(0, 0, 2, -1);
+                    }
+                    
+                    $statistics[$tone["tone_name"]][0] += $tone["score"];
+                    $statistics[$tone["tone_name"]][1]++;
+                    $statistics[$tone["tone_name"]][2] = min(array(
+                        $tone["score"], $statistics[$tone["tone_name"]][2]
+                    ));
+                    
+                    $statistics[$tone["tone_name"]][3] = max(array(
+                        $tone["score"], $statistics[$tone["tone_name"]][3]
+                    ));                                        
+                }
+            }
+        }
+        
+        return $statistics;
     }
 
     private function processActivity($activity, $request) {
