@@ -1,0 +1,62 @@
+
+<script>
+    google.charts.setOnLoadCallback(drawChart{{key|replace(' ','_')}});
+
+    function drawChart{{key|replace(' ','_')}}() {
+        var data = new google.visualization.DataTable();
+        var mappings = [
+            {% for key, value in summary %}
+                {{ value[0].id }} {% if not loop.last %},{%endif%}                    
+            {% endfor %}
+          
+        ];
+        data.addColumn('string', 'Tone');        
+
+        {% for key in stat %}
+            data.addColumn('number', "Activity {{ loop.index }}");        
+        {% endfor %}
+
+        data.addRows([
+            [
+                'Min', 
+                {% for key,value in stat %}
+                    {{ value[2] }}
+                    {% if not loop.last %},{%endif%}
+                {% endfor %}
+            ],
+            [
+                'Average', 
+                {% for key,value in stat %}
+                    {{ value[0]/value[1] }}
+                    {% if not loop.last %},{%endif%}
+                {% endfor %}
+            ],
+            [
+                'Max', 
+                {% for key,value in stat %}
+                    {{ value[3] }}
+                    {% if not loop.last %},{%endif%}
+                {% endfor %}
+            ]
+        ]);
+
+
+        var options = {'title':'{{key}}',
+                   'width':700,
+                   'height':300,
+                   chartArea: {'width': '60%'}
+
+               };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_{{key|replace(' ','_')}}'));
+        google.visualization.events.addListener(chart, 'select', selectHandler); 
+
+        function selectHandler(e)     {   
+            window.location.href = "/activity/analyse/" + mappings[chart.getSelection()[0].column - 1]
+        }
+
+        chart.draw(data, options);
+    }
+</script>
+                    
+<div style="display: inline-block" id="chart_div_{{key|replace(' ','_')}}"></div>

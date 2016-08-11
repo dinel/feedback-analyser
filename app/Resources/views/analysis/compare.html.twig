@@ -1,0 +1,130 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}    
+{% endblock stylesheets %}
+
+{% block body %}
+    
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+</script>
+
+<div class="container">
+    <div class='row voffset5'>
+        <div class="col-md-9">
+            <h2>Compare activities</h2>
+            <section id="list-activities" class="group">
+                <h3 class="voffset4">List of activities compared</h3>
+                <dl class="dl-horizontal">
+                {% for activity in summary %}
+                    <dt>Activity {{ loop.index }}</dt> <dd>{{ activity[0].name }}</dd>
+                {% endfor %}        
+                </dl>
+            </section>
+                
+            <section id="tone-analysis" class="group">
+                <h3 class="voffset4">Tone analysis</h3>
+                <div id="emotion" class="subgroup">
+                    <h4>Emotion</h4>
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Anger', 'stat':tones['Anger'], 'summary':summary} %}
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Disgust', 'stat':tones['Disgust']} %}
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Fear', 'stat':tones['Fear']} %}
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Joy', 'stat':tones['Joy']} %}
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Sadness', 'stat':tones['Sadness']} %}                    
+                </div>
+                
+                <div id="social-tone" class="subgroup">
+                    <h4>Social tone</h4>
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Openness', 'stat':tones['Openness']} %}
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Conscientiousness', 'stat':tones['Conscientiousness']} %}
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Extraversion', 'stat':tones['Extraversion']} %}
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Agreeableness', 'stat':tones['Agreeableness']} %}
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Emotional Range', 'stat':tones['Emotional Range']} %}
+                </div>
+                
+                <div id="language-tone" class="subgroup">
+                    <h4>Language tone</h4>
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Analytical', 'stat':tones['Analytical']} %}
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Confident', 'stat':tones['Confident']} %}
+                    
+                    {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Tentative', 'stat':tones['Tentative']} %}
+                </div>
+            </section> 
+            
+            <section id="freq-list" class="group">
+                <h3 class="voffset4">Frequency list</h3>
+            
+                <div class="voffset3">
+                    <dl class="dl-horizontal">
+                    {% for activity in summary %}
+                        <dt class="voffset2">Activity {{ loop.index }}</dt>
+                        <dd class="voffset2">
+                            {% for word, freq in activity[1]|slice(0,40) %}
+                                <a href="{{ path('display_keyword', {'id_activity': activity[0].id, 'keyword': word}) }}">{{word}}</a> 
+                                ({{freq}}){% if not loop.last %},{% endif %}                        
+                            {% endfor %}
+                        </dd>                        
+                    {% endfor %}  
+                    </dl>
+                </div>
+            </section>
+        </div>
+                
+        <!-- Navbar start -->        
+        <nav class="col-md-3 bs-docs-sidebar">
+            <ul id="sidebar" class="nav nav-stacked fixed">
+                <li>
+                    <a href="#list-activities">List activities</a>
+                </li>
+                <li>
+                    <a href="#tone-analysis">Tone analysis</a>
+                    <ul class="nav nav-stacked">
+                        <li><a href="#emotion">Emotion</a></li>
+                        <li><a href="#social-tone">Social tone</a></li>
+                        <li><a href="#language-tone">Language tone</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#freq-list">Frequency list</a>
+                </li>                
+            </ul>
+        </nav>
+        
+        <!-- Navbar end -->
+    </div>
+        
+                
+    <div class='row voffset4'>
+        <div class="col-md-2">
+            <h4><a href="/">[Go to dashboard]</a></h4>
+         </div>
+    </div>
+</div>
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    $('body').scrollspy({
+        target: '.bs-docs-sidebar',
+        offset: 40
+    });
+    </script>
+{% endblock %}
