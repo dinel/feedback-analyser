@@ -12,222 +12,193 @@
 </script>
 
 <div class="container">
-    <div class="row header">
-        <div class="col-md-8 col-md-offset-2 highlighted">
-            <p class="text-right">
-                {% if app.user %}
-                    Hello {{ app.user }}!
-                {% else %}
-                    <a href="/login">Login</a>
-                {% endif %}
-            </p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-2">
-            <h3>Activity</h3>
-        </div>
-        <div class="col-md-8 indented3">
-            <strong>{{ activity.name }}</strong><br/>            
-            <i>{{ activity.description }}</i> <br/><br>
-            Date: {{ activity.date|date('d/m/Y') }}<br/>
-            No feedbacks: {{ activity.feedbacks|length }}
-        </div>
-    </div>
+    <div class='row voffset5'>
+        <div class="col-md-9">
+            <h2>Activity analysis</h2>
+            
+            <section id="details" class="group">
+                <h3 class="voffset4">Details of the activity</h3>
+                
+                <strong>{{ activity.name }}</strong><br/>            
+                <i>{{ activity.description }}</i> <br/><br>
+                Date: {{ activity.date|date('d/m/Y') }}<br/>
+                No feedbacks: {{ activity.feedbacks|length }}
+            </section>
+            
+            <section id="word-cloud" class="group">
+                <h3 class="voffset4">Word cloud
+                    <div class="text-right">
+                        <a data-toggle="popover" title="About word clouds" 
+                           data-content="This word cloud shows the 40 most frequent words 
+                           mentioned by participants. Stop words such as 'the' and 'and' 
+                           were removed. We removed also 'university' and 'day'. Click on 
+                           the word if you want to see the context in which it is used. ">
+                            <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </h3>
     
-<!-- Begin word cloud -->       
-    <div class="row voffset4">
-        <div class="col-md-2">
-            <h3>Word cloud</h3>            
-        </div>
-        <div class="col-md-8">            
-            {{ render_hinclude(controller(
-                            'AppBundle:Default:getFrequencyList', 
-                            {'id_activity': activity.id}), 
-                            {'default': 'misc/wait.html.twig'}) 
-            }}
-            <div class="text-right">
-                <a data-toggle="popover" title="About word clouds" 
-                   data-content="This word cloud shows the 40 most frequent words 
-                   mentioned by participants. Stop words such as 'the' and 'and' 
-                   were removed. We removed also 'university' and 'day'. Click on 
-                   the word if you want to see the context in which it is used. ">
-                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>
-            <div id="keywords"></div>
-        </div>
-    </div>            
-<!-- End word cloud -->
+                <div>
+                    {{ render_hinclude(controller(
+                                    'AppBundle:Default:getFrequencyList', 
+                                    {'id_activity': activity.id}), 
+                                    {'default': 'misc/wait.html.twig'}) 
+                    }}                    
+                    <div id="keywords"></div>
+                </div>
+            </section>
+            <!-- End word cloud -->
 
 <!-- Begin Tone analysis -->
-    <div class="row voffset4">
-        <div class="col-md-2">
-            <h3>Tone analysis</h3>
-         </div>
-        <div class="col-md-8">
-            <div class="text-right">
-                <a data-toggle="popover" title="About tone analysis"
-                   data-content="Uses linguistic analysis to detect three types 
-                   of tones from text: emotion, social tendencies, and language style.
-                   Tone analysis is different from sentiment analysis because 
-                   tone analysis is less about analyzing how someone else feels, 
-                   and more about analyzing how they are coming across to others.
-                   The tone anaysis is powered by Watson Tone Analyzer Service 
-                   (https://www.ibm.com/watson/
-                   developercloud/doc/tone-analyzer/)">
-                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>
-        </div>
-    </div>
+            <section id="tone-analysis" class="group">
+                <h3 class="voffset4">Tone analysis
+                    <div class="text-right">
+                        <a data-toggle="popover" title="About tone analysis"
+                           data-content="Uses linguistic analysis to detect three types 
+                           of tones from text: emotion, social tendencies, and language style.
+                           Tone analysis is different from sentiment analysis because 
+                           tone analysis is less about analyzing how someone else feels, 
+                           and more about analyzing how they are coming across to others.
+                           The tone anaysis is powered by Watson Tone Analyzer Service 
+                           (https://www.ibm.com/watson/
+                           developercloud/doc/tone-analyzer/)">
+                            <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </h3>
+                
+                <div id="emotion" class="subgroup">
+                    <h4>Emotion</h4>
 
-<!-- Begin emotion -->
-    <div class="row voffset2">
-        <div class="col-md-2">
-            <h4>Emotion</h4>
-         </div>
-        <div class="col-md-8">
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Anger', 'stat':statistics['Anger']} %}
-            {% include 'help/tone_anger.html.twig' with {'size': 'big'} %}
-        </div>
-    </div>
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Anger', 'stat':statistics['Anger']} %}
+                    {% include 'help/tone_anger.html.twig' with {'size': 'big'} %}
 
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Disgust', 'stat':statistics['Disgust']} %}
-            {% include 'help/tone_disgust.html.twig' with {'size': 'big'} %}
-        </div>
-    </div>
-        
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Fear', 'stat':statistics['Fear']} %}
-            {% include 'help/tone_fear.html.twig' with {'size': 'big'} %}
-        </div>
-    </div>
-        
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Joy', 'stat':statistics['Joy']} %}
-            {% include 'help/tone_joy.html.twig' with {'size': 'big'} %}
-        </div>
-    </div>
-        
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Sadness', 'stat':statistics['Sadness']} %}
-            {% include 'help/tone_sadness.html.twig' with {'size': 'big'} %}
-        </div>
-    </div>
-<!-- End emotion -->
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Disgust', 'stat':statistics['Disgust']} %}
+                    {% include 'help/tone_disgust.html.twig' with {'size': 'big'} %}
 
-<!-- Beging social tone -->    
-    <div class="row voffset2">
-        <div class="col-md-2">
-            <h4>Social tone</h4>
-         </div>
-        <div class="col-md-8">
-            <div class="text-right">
-                <a data-toggle="popover" title="Social tone"
-                   data-content="Social tone measures the social tendencies in 
-                   people's writing. Tone Analyzer responds with analysis on 
-                   five different social tones: openness, conscientiousness, 
-                   extraversion, agreeableness, and emotional range (or neuroticism). 
-                   These five social tones are adopted from the Big-five personality 
-                   model.">
-                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>                        
-        </div>
-    </div>
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Fear', 'stat':statistics['Fear']} %}
+                    {% include 'help/tone_fear.html.twig' with {'size': 'big'} %}
 
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Openness', 'stat':statistics['Openness']} %}
-            {% include 'help/tone_sadness.html.twig' with {'size': 'big'} %}
-        </div>
-    </div>
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Joy', 'stat':statistics['Joy']} %}
+                    {% include 'help/tone_joy.html.twig' with {'size': 'big'} %}
 
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Conscientiousness', 'stat':statistics['Conscientiousness']} %}
-            {% include 'help/tone_conscientiousness.html.twig' with {'size': 'big'} %}            
-        </div>
-    </div>
-        
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Extraversion', 'stat':statistics['Extraversion']} %}
-            {% include 'help/tone_extraversion.html.twig' with {'size': 'big'} %}                 
-        </div>
-    </div>
-        
-        
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Agreeableness', 'stat':statistics['Agreeableness']} %}
-            {% include 'help/tone_agreeableness.html.twig' with {'size': 'big'} %} 
-        </div>
-    </div>
-        
-        
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">            
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Emotional Range', 'stat':statistics['Emotional Range']} %}
-            {% include 'help/tone_emotional_range.html.twig' with {'size': 'big'} %}
-        </div>
-    </div>
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Sadness', 'stat':statistics['Sadness']} %}
+                    {% include 'help/tone_sadness.html.twig' with {'size': 'big'} %}
+                </div>
+
+<!-- Beging social tone -->
+
+                <div id="social-tone" class="subgroup">
+                    <h4>Social tone
+                        <div class="text-right">
+                            <a data-toggle="popover" title="Social tone"
+                               data-content="Social tone measures the social tendencies in 
+                               people's writing. Tone Analyzer responds with analysis on 
+                               five different social tones: openness, conscientiousness, 
+                               extraversion, agreeableness, and emotional range (or neuroticism). 
+                               These five social tones are adopted from the Big-five personality 
+                               model.">
+                                <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+                            </a>
+                        </div>                        
+                    </h4>
+   
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Openness', 'stat':statistics['Openness']} %}
+                    {% include 'help/tone_sadness.html.twig' with {'size': 'big'} %}
+
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Conscientiousness', 'stat':statistics['Conscientiousness']} %}
+                    {% include 'help/tone_conscientiousness.html.twig' with {'size': 'big'} %}            
+
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Extraversion', 'stat':statistics['Extraversion']} %}
+                    {% include 'help/tone_extraversion.html.twig' with {'size': 'big'} %}                 
+
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Agreeableness', 'stat':statistics['Agreeableness']} %}
+                    {% include 'help/tone_agreeableness.html.twig' with {'size': 'big'} %} 
+
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Emotional Range', 'stat':statistics['Emotional Range']} %}
+                    {% include 'help/tone_emotional_range.html.twig' with {'size': 'big'} %}
+                </div>
 <!-- End social tone -->
 
 <!-- Begin language tone -->
-    <div class="row voffset2">
-        <div class="col-md-2">
-            <h4>Language tone</h4>
-         </div>
-        <div class="col-md-8">
-            <div class="text-right">
-                <a data-toggle="popover" title="Language tone"
-                   data-content="Describes perceived writing style using these 
-                   categories: analytical style, reasoning style, and confidence. 
-                   For each of these categories, the service outputs a score from 0 to 1">
-                    <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>                        
-        </div>
-    </div>
+                <div id="language-tone" class="subgroup">
+                    <h4>Language tone
+                        <div class="text-right">
+                            <a data-toggle="popover" title="Language tone"
+                               data-content="Describes perceived writing style using these 
+                               categories: analytical style, reasoning style, and confidence. 
+                               For each of these categories, the service outputs a score from 0 to 1">
+                                <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+                            </a>
+                        </div>                        
+                    </h4>
 
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Analytical', 'stat':statistics['Analytical']} %}
-            {% include 'help/tone_analytical.html.twig' with {'size': 'big'} %}           
-        </div>
-    </div>
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Analytical', 'stat':statistics['Analytical']} %}
+                    {% include 'help/tone_analytical.html.twig' with {'size': 'big'} %}           
 
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Confident', 'stat':statistics['Confident']} %}
-            {% include 'help/tone_confident.html.twig' with {'size': 'big'} %}                  
-        </div>
-    </div>
-        
-    <div class="row voffset2">
-        <div class="col-md-8 col-md-offset-2">          
-            {% include 'analysis/tone_graph.html.twig' with {'key':'Tentative', 'stat':statistics['Tentative']} %}
-            {% include 'help/tone_tentative.html.twig' with {'size': 'big'} %}    
-        </div>
-    </div>
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Confident', 'stat':statistics['Confident']} %}
+                    {% include 'help/tone_confident.html.twig' with {'size': 'big'} %}                  
+
+                    {% include 'analysis/tone_graph.html.twig' with {'key':'Tentative', 'stat':statistics['Tentative']} %}
+                    {% include 'help/tone_tentative.html.twig' with {'size': 'big'} %}    
+                </div>
+            </section>
             
 <!-- End language tone -->
-              
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        {% include 'analysis/sentiment_graph.html.twig' with {'positive': sentiment[0], 'negative': sentiment[1]} %}
+            
+            <section id="sentiment" class="group">
+                <h3 class="voffset4">Sentiment analysis
+                    <div class="text-right">
+                            <a data-toggle="popover" title="Sentiment analysis"
+                               data-content="Sentiment analysis determines the 
+                               overall positivity and negativity in the feedbacks. 
+                               It relies on SentiStrenght method and assigns each
+                               feedback a score between 1 and 5, where 1 indicates
+                               the lack of the sentiment and 5 a very strong sentiment, 
+                               for each of the two sentiments. The overall score of
+                               an activity is a weighted sum of the individual scores
+                               divided by the number of feedbacks.">
+                                <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                </h3>
+                
+                {% include 'analysis/sentiment_graph.html.twig' with {'positive': sentiment[0], 'negative': sentiment[1]} %}
+            </section>
+        </div>    
+            
+        <!-- Navbar start -->        
+        <nav class="col-md-3 bs-docs-sidebar">
+            <ul id="sidebar" class="nav nav-stacked fixed">
+                <li>
+                    <a href="#details">Activity details</a>
+                </li>
+                <li>
+                    <a href="#word-cloud">Word cloud</a>
+                </li>
+                <li>
+                    <a href="#tone-analysis">Tone analysis</a>
+                    <ul class="nav nav-stacked">
+                        <li><a href="#emotion">Emotion</a></li>
+                        <li><a href="#social-tone">Social tone</a></li>
+                        <li><a href="#language-tone">Language tone</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#sentiment">Sentiment analysis</a>
+                </li>
+            </ul>
+        </nav>
     </div>
-</div>
-        </div>
+    
+    <div class='row voffset4'>
+        <div class="col-md-2">
+            <h4><a href="/">[Go to dashboard]</a></h4>
+         </div>
     </div>
+
+    <!-- Navbar end -->
+
 </div>
 {% endblock %}
 
@@ -235,4 +206,10 @@
     {{ parent() }}
     <script src="{{ asset('assets/vendor/jqcloud2/dist/jqcloud.min.js') }}"></script>
     <script src="{{ asset('js/hinclude.js') }}"></script>
+        <script>
+            $('body').scrollspy({
+                target: '.bs-docs-sidebar',
+                offset: 40
+            });
+        </script>
 {% endblock %}
