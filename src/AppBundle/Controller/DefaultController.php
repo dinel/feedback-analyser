@@ -102,6 +102,7 @@ class DefaultController extends Controller
                 'statistics' => $statistics,
                 'activity' => $activity,
                 'sentiment' => array($activity->getSentimentScores(1), $activity->getSentimentScores(-1)),
+                'emotions' => $this->getEmotionCounts($activity),
         ));
     }
     
@@ -284,6 +285,52 @@ class DefaultController extends Controller
      * Private methods
      * 
      ************************************************************************/
+    
+    private function getEmotionCounts($activity) {
+        $freq_list = $this->produceFrequencyList($activity);
+        $emotion_words = array("anger" => array(), "anticipation" => array(),
+            "disgust" => array(), "fear" => array(), "joy" => array(),
+            "negative" => array(), "positive" => array(), "sadness" => array(),
+            "surprise" => array(), "trust" => array());
+        
+        // read emotions
+        $kernel = $this->get('kernel');
+        $path = $kernel->locateResource('@AppBundle/Controller/NRC-emotion-lexicon-wordlevel-alphabetized-v0.92.txt');
+        $handle = fopen($path, "r");
+        if($handle) {
+            $in_header = 1;
+            while (($line = fgets($handle)) !== false) {
+                $pieces = explode("\t", $line);
+                
+                if(count($pieces) != 3) {
+                    continue;
+                }
+                
+                if($pieces && $pieces[0] == "aback") {
+                    $in_header = 0;
+                }
+                
+                if($in_header) {
+                    continue;
+                }
+                
+                if($pieces[2] == 0) {
+                    continue;
+                }                
+                
+                if(array_key_exists($pieces[0], $freq_list) && $freq_list[$pieces[0]] > 1) {
+                    $emotion_words[$pieces[1]][] = array($freq_list[$pieces[0]], $pieces[0]);
+                }
+            }
+            fclose($handle);
+        }
+        
+        foreach($emotion_words as &$emotion) {
+            arsort($emotion);
+        }
+        
+        return $emotion_words;
+    }
     
     private function getTones($activity) {
         $statistics = array();
