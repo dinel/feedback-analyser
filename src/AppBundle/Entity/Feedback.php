@@ -65,6 +65,16 @@ class Feedback {
      * @ORM\Column(type="text", nullable=true)
      */
     protected $jsonAnalysis;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $positive_score;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $negative_score;
         
     private $header = array("Content-type: application/json", "X-Watson-Learning-Opt-Out: 1");
     private $url = "https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&sentences=false";
@@ -201,5 +211,70 @@ class Feedback {
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set positive_score
+     *
+     * @param integer $positiveScore
+     * @return Feedback
+     */
+    public function setPositiveScore()
+    {
+        $tmp_file_name = tempnam("/tmp", "FB");
+        $handle = fopen($tmp_file_name, "w");
+        if($handle) {
+            fwrite($handle, $this->getText());
+            fclose($handle);
+
+            $output = popen("cat " . $tmp_file_name 
+                    .  " | java -jar /home/dinel/Projects/feedback_analyser/extra/SentiStrengthCom.jar " 
+                    . "sentidata /home/dinel/Projects/feedback_analyser/extra/SentStrength_Data/ stdin " 
+                    , "r");
+            $read = fread($output, 1024);
+            $values = explode("\t", $read);
+            $this->positive_score = $values[0];
+            $this->negative_score = $values[1];
+        }
+    }
+
+    /**
+     * Get positive_score
+     *
+     * @return integer 
+     */
+    public function getPositiveScore()
+    {
+        if(($this->positive_score === NULL) || ($this->negative_score === NULL)) {
+            $this->setPositiveScore();
+        }
+        return $this->positive_score;
+    }
+
+    /**
+     * Set negative_score
+     *
+     * @param integer $negativeScore
+     * @return Feedback
+     */
+    public function setNegativeScore()
+    {
+        $this->setPositiveScore();
+
+        return $this;
+    }
+
+    /**
+     * Get negative_score
+     *
+     * @return integer 
+     */
+    public function getNegativeScore()
+    {
+        if(($this->positive_score === NULL) || ($this->negative_score === NULL)) {
+            $this->setPositiveScore();
+        }
+        
+        return abs($this->negative_score);
     }
 }

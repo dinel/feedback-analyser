@@ -179,4 +179,23 @@ class Activity {
     {
         return $this->feedbacks;
     }
+    
+    /**
+     * Get positive feedbacks
+     */
+    public function getSentimentScores($type)
+    {
+        $scores = array(0, 0, 0, 0, 0);
+        foreach ($this->getFeedbacks() as $feedback) {
+            if($type > 0) {
+                $score = $feedback->getPositiveScore();
+            } else {
+                $score = $feedback->getNegativeScore();
+            }
+            
+            $scores[$score - 1] += ($score/count($this->getFeedbacks()));
+        }
+        
+        return $scores;      
+    }
 }
