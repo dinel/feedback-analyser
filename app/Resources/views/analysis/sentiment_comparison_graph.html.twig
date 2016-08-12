@@ -1,0 +1,49 @@
+
+<script>
+    google.charts.setOnLoadCallback(drawChartSentiment);
+
+    function drawChartSentiment() {
+        var data = new google.visualization.arrayToDataTable([
+           ['Sentiment scores', 'Score 1', 'Score 2', 'Score 3', 'Score 4', 'Score 5'],
+           {% for activity in summary %}
+           ['Positive - Act {{loop.index}}', 
+               {% for value in activity[2] %}
+                    {{ value }}
+                    {% if not loop.last %},{% endif %}
+               {% endfor %} 
+                                   
+           ],
+           {% endfor %}
+           ["", 0, 0, 0, 0, 0],
+           {% for activity in summary %}
+           ['Negative - Act {{loop.index}}',
+               {% for value in activity[3] %}
+                    {{ value }}
+                    {% if not loop.last %},{% endif %}
+               {% endfor %}                                    
+           ]
+           {% if not loop.last %},{% endif %}
+           {% endfor %}
+        ]);
+                
+        var options = {'title':'Sentiment',
+                   'width':700,
+                   'height':300,
+                   //legend: {position: 'none'},
+                   //hAxis: { textPosition: 'none' },
+                   isStacked: true
+               };
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div_sentiment'));
+/*
+        google.visualization.events.addListener(chart, 'select', selectHandler); 
+
+        function selectHandler(e)     {   
+            window.location.href = "/feedback/display/" + data.getValue(chart.getSelection()[0].row, 0);
+        }
+*/
+        chart.draw(data, options);
+    }
+</script>
+                    
+<div style="display: inline-block" id="chart_div_sentiment"></div>
