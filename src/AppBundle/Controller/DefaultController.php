@@ -185,6 +185,7 @@ class DefaultController extends Controller
             foreach($this->getTones($activity) as $tone => $value) {
                 $tones[$tone][] = $value;
             }
+            $a_activity[] = $this->getEmotionCounts($activity);
             
             $summary[] = $a_activity;
         }

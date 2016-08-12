@@ -89,6 +89,26 @@
                     </dl>
                 </div>
             </section>
+                    
+            <section id="emotion-words" class="group">
+                <h3>Emotion words used</h3>
+                {% for emotion in ["anger", "anticipation", "disgust", 
+                                   "fear", "joy", "negative", "positive", 
+                                    "sadness", "surprise", "trust"] %}
+                    <strong>{{ emotion|capitalize }}</strong>: <br/>
+                    {% for activity in summary %}
+                        Activity {{ loop.index }}: 
+                        {% for word in activity[4][emotion] %}
+                            {% if not loop.first %}, {% endif %}
+                            <a href="{{ path('display_keyword', {'id_activity': activity[0].id, 
+                                    'keyword': word[1]}) }}">{{ word[1] }}</a> ({{ word[0]}}) 
+                        {% endfor %}
+                        <br/>
+                    {% endfor %}
+                    
+                    <br/>
+                {% endfor %}
+            </section>
         </div>
                 
         <!-- Navbar start -->        
@@ -110,7 +130,10 @@
                 </li>
                 <li>
                     <a href="#freq-list">Frequency list</a>
-                </li>                
+                </li>
+                <li>
+                    <a href="#emotion-words">Emotion words used</a>
+                </li>
             </ul>
         </nav>
         
@@ -118,7 +141,7 @@
     </div>
         
                 
-    <div class='row voffset4'>
+    <div class='row voffset4'  style="margin-bottom: 40em;">
         <div class="col-md-2">
             <h4><a href="/">[Go to dashboard]</a></h4>
          </div>
