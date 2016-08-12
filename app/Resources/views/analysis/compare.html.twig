@@ -66,6 +66,11 @@
                     {% include 'analysis/tone_comparison_graph.html.twig' with {'key':'Tentative', 'stat':tones['Tentative']} %}
                 </div>
             </section> 
+                
+            <section id="sentiment" class="group">
+                <h3 class="voffset4">Sentiment analysis</h3>
+                {% include 'analysis/sentiment_comparison_graph.html.twig' %}
+            </section>
             
             <section id="freq-list" class="group">
                 <h3 class="voffset4">Frequency list</h3>
@@ -99,6 +104,9 @@
                         <li><a href="#social-tone">Social tone</a></li>
                         <li><a href="#language-tone">Language tone</a></li>
                     </ul>
+                </li>
+                <li>
+                    <a href="#sentiment">Sentiment analysis</a>
                 </li>
                 <li>
                     <a href="#freq-list">Frequency list</a>
