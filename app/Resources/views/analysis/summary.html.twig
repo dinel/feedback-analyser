@@ -201,36 +201,21 @@
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
             {% include 'analysis/tone_graph.html.twig' with {'key':'Analytical', 'stat':statistics['Analytical']} %}
-            <a data-toggle="popover" title="Analytical"
-               data-content="A person's reasoning and analytical attitude about things.
-               Value over 0.75 more likely to be perceived as 
-               as  intellectual, rational, systematic, emotionless, or impersonal.">
-               <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>            
+            {% include 'help/tone_analytical.html.twig' with {'size': 'big'} %}           
         </div>
     </div>
 
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">
             {% include 'analysis/tone_graph.html.twig' with {'key':'Confident', 'stat':statistics['Confident']} %}
-            <a data-toggle="popover" title="Confident"
-                   data-content="A persons degree of certainty. 
-                   Value over 0.75 more likely to be perceived as 
-                   assured, collected, hopeful, or egotistical.">
-                   <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-            </a>
+            {% include 'help/tone_confident.html.twig' with {'size': 'big'} %}                  
         </div>
     </div>
         
     <div class="row voffset2">
         <div class="col-md-8 col-md-offset-2">          
             {% include 'analysis/tone_graph.html.twig' with {'key':'Tentative', 'stat':statistics['Tentative']} %}
-            <a data-toggle="popover" title="Tentative"
-                   data-content="A persons degree of inhibition.
-                   Value over 0.75 more likely to be perceived as 
-                   questionable, doubtful, limited, or debatable.">
-                   <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
-                </a>
+            {% include 'help/tone_tentative.html.twig' with {'size': 'big'} %}    
         </div>
     </div>
             
