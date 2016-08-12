@@ -43,6 +43,14 @@ body {
     position: fixed;
 }
 
+.popover{
+    width:700px;
+}
+
+.help-indent {
+    margin-left: 0.5em;
+}
+
 /* sidebar: Inspired from https://jsfiddle.net/gableroux/S2SMK/ */
 .bs-docs-sidebar {
     padding-left: 20px;
