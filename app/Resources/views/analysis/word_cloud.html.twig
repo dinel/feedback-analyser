@@ -13,7 +13,7 @@
     <script>
         var words = [
             {% for word, freq in freq_list|slice(0,40) %}
-                    {text: '{{word}}:{{freq}}', weight: {{freq}}, link: '{{ path('display_keyword', 
+                    {text: '{{word}}', weight: {{freq}}, link: '{{ path('display_keyword', 
                             {'id_activity': id_activity, 'keyword': word}) }}' },
             {% endfor %}                
         ];
