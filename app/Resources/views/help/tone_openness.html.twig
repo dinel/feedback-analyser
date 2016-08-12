@@ -1,0 +1,14 @@
+{# empty Twig template #}
+
+<a data-toggle="popover" title="Openness"
+                   data-content="The extent a person is open to experience a variety 
+                   of activities. 
+                   Value over 0.75 more likely to be perceived as 
+                   as intellectual, curious, emotionally-aware, imaginative, willing 
+                   to try new things, appreciating beauty, or open to change.">
+    {% if size == "big" %}
+        <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+    {% else %}
+        <i class="fa fa-question-circle-o help-indent" aria-hidden="true"></i>
+    {% endif %}
+</a>

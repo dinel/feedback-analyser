@@ -1,0 +1,13 @@
+{# empty Twig template #}
+
+<a data-toggle="popover" title="Emotional Range"
+                   data-content="The extent a person's emotion is sensitive to 
+                   the environment. Value over 0.75 more likely to be perceived as 
+                   concerned, frustrated, angry, passionate, upset, stressed, insecure, 
+                   or impulsive.">
+    {% if size == "big" %}
+        <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+    {% else %}
+        <i class="fa fa-question-circle-o help-indent" aria-hidden="true"></i>
+    {% endif %}
+</a>

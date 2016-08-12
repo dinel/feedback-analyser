@@ -1,0 +1,12 @@
+{# empty Twig template #}
+
+<a data-toggle="popover" title="Tentative"
+                   data-content="A persons degree of inhibition.
+                   Value over 0.75 more likely to be perceived as 
+                   questionable, doubtful, limited, or debatable.">
+    {% if size == "big" %}
+        <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+    {% else %}
+        <i class="fa fa-question-circle-o help-indent" aria-hidden="true"></i>
+    {% endif %}
+</a>

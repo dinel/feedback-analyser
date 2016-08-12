@@ -1,0 +1,13 @@
+{# empty Twig template #}
+
+<a data-toggle="popover" title="Sadness"
+                   data-content="Indicates a feeling of loss and disadvantage. When 
+                   a person can be observed to be quiet, less energetic and withdrawn, 
+                   it may be inferred that sadness exists. Values over 0.75 are more
+                   likely to be perceived as sad.">
+    {% if size == "big" %}
+        <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+    {% else %}
+        <i class="fa fa-question-circle-o help-indent" aria-hidden="true"></i>
+    {% endif %}
+</a>

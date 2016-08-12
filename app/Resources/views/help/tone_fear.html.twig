@@ -1,0 +1,13 @@
+{# empty Twig template #}
+
+<a data-toggle="popover" title="Fear"
+                   data-content="A response to impending danger. It is a survival 
+                   mechanism that is a reaction to some negative stimulus. It may 
+                   be a mild caution or an extreme phobia. Values over 
+                   0.75 are more likely to be perceived as scared.">
+    {% if size == "big" %}
+        <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+    {% else %}
+        <i class="fa fa-question-circle-o help-indent" aria-hidden="true"></i>
+    {% endif %}
+</a>

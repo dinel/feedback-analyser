@@ -1,0 +1,13 @@
+{# empty Twig template #}
+
+<a data-toggle="popover" title="Conscientiousness"
+                   data-content="The tendency to act in an organized or thoughtful way. 
+                   Value over 0.75 more likely to be perceived as 
+                   perceived as disciplined, dutiful, achievement-striving, confident, 
+                   driven, or organized.">
+    {% if size == "big" %}
+        <i class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+    {% else %}
+        <i class="fa fa-question-circle-o help-indent" aria-hidden="true"></i>
+    {% endif %}
+</a>
