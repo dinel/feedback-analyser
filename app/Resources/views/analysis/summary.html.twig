@@ -235,7 +235,12 @@
     </div>
             
 <!-- End language tone -->
-                
+              
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        {% include 'analysis/sentiment_graph.html.twig' with {'positive': sentiment[0], 'negative': sentiment[1]} %}
+    </div>
+</div>
         </div>
     </div>
 </div>

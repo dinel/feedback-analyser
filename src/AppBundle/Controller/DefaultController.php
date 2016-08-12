@@ -101,6 +101,7 @@ class DefaultController extends Controller
         return $this->render('analysis/summary.html.twig', array(
                 'statistics' => $statistics,
                 'activity' => $activity,
+                'sentiment' => array($activity->getSentimentScores(1), $activity->getSentimentScores(-1)),
         ));
     }
     
@@ -178,6 +179,8 @@ class DefaultController extends Controller
                              ->find($id_activity);
             $a_activity[] = $activity;
             $a_activity[] = $this->produceFrequencyList($activity);
+            $a_activity[] = $activity->getSentimentScores(1);
+            $a_activity[] = $activity->getSentimentScores(-1);
             foreach($this->getTones($activity) as $tone => $value) {
                 $tones[$tone][] = $value;
             }
