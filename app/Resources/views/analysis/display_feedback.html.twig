@@ -36,21 +36,27 @@
             <li>Emotional tones
                 <ul>
                 {% for key in ['Joy', 'Fear', 'Sadness', 'Disgust', 'Anger'] %}
-                    <li>{{ key }}: {{ tones[key] }}</li>
+                    <li>{{ key }}: {{ tones[key] }}
+                    {% include '/help/tone_'~key|lower~'.html.twig' with {'size': 'small'} %}
+                    </li>
                 {% endfor %}
                 </ul>
             </li>
             <li>Social tones
                 <ul>
                 {% for key in ['Openness', 'Conscientiousness', 'Extraversion', 'Agreeableness', 'Emotional Range'] %}
-                    <li>{{ key }}: {{ tones[key] }}</li>
+                    <li>{{ key }}: {{ tones[key] }}
+                        {% include '/help/tone_'~key|lower|replace(' ', '_')~'.html.twig' with {'size': 'small'} %}
+                    </li>
                 {% endfor %}
                 </ul>                
             </li>
             <li>Language tones
                 <ul>
                 {% for key in ['Analytical', 'Confident', 'Tentative'] %}
-                    <li>{{ key }}: {{ tones[key] }}</li>
+                    <li>{{ key }}: {{ tones[key] }}
+                    {% include '/help/tone_'~key|lower~'.html.twig' with {'size': 'small'} %}
+                    </li>
                 {% endfor %}
                 </ul>                
             </li>
