@@ -46,7 +46,16 @@ class DefaultController extends Controller
         ));
     }
     
+                
     /**
+     * @Route("/thank-you", name="thank_you")
+     */
+    public function thankYouAction()
+    {
+        return $this->render('default/thank_you.html.twig', array());
+    }
+
+        /**
      * @Route("/activity/create", name="create_activity")
      */
     public function createActivityAction(Request $request) {
@@ -390,8 +399,8 @@ class DefaultController extends Controller
     private function editFeedback($activity, $feedback, $request) {
         $form = $this->createFormBuilder($feedback)
                      ->add('text', 'textarea', array(
-                            'attr' => array('row' => 6)))
-                     ->add('date', 'date')
+                            'attr' => array('row' => 8)))
+                     //->add('date', 'date')
                      ->add('save', 'submit')
                      ->add('reset', 'submit', array('label' => 'Cancel'))
                      ->getForm();
@@ -406,14 +415,14 @@ class DefaultController extends Controller
                     $feedback->setActivity($activity);
                     $activity->addFeedback($feedback);
                 }
-                $feedback->setJsonAnalysis();
+                //$feedback->setJsonAnalysis($this->container);
                 
                 $em->persist($feedback);
                 $em->persist($activity);
                 $em->flush();
             }
             
-            return $this->redirectToRoute("homepage");
+            return $this->redirectToRoute("thank_you");
         }
         
         return $this->render('admin/feedback.html.twig', array(
