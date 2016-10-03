@@ -214,6 +214,7 @@ class DefaultController extends Controller
                          ->find($id_activity);
         
         $feedback = new \AppBundle\Entity\Feedback();
+        $feedback->setDate(new \DateTime("now"));
         
         if($activity) {
             return $this->editFeedback($activity, $feedback, $request);
@@ -400,7 +401,7 @@ class DefaultController extends Controller
         $form = $this->createFormBuilder($feedback)
                      ->add('text', 'textarea', array(
                             'attr' => array('row' => 8)))
-                     //->add('date', 'date')
+                     ->add('date', 'date')
                      ->add('save', 'submit')
                      ->add('reset', 'submit', array('label' => 'Cancel'))
                      ->getForm();
