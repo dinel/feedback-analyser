@@ -1,0 +1,24 @@
+{# app/Resources/views/default/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+
+{% block body %}
+<div class="container">
+                        
+        <div class="row voffset4">
+            <div class="col-md-12 text-center">
+                <h2>Thank you for your input! See you soon.</h2>
+            </div>
+        </div>
+                
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/landing.js') }}"></script>
+{% endblock %}
