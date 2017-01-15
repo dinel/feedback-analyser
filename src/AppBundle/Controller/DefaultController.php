@@ -23,6 +23,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 use NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer;
 
 class DefaultController extends Controller
@@ -362,12 +367,12 @@ class DefaultController extends Controller
 
     private function processActivity($activity, $request) {
         $form = $this->createFormBuilder($activity)
-                     ->add('name', 'text')
-                     ->add('description', 'textarea', array(
+                     ->add('name', TextType::class)
+                     ->add('description', TextareaType::class, array(
                             'attr' => array('row' => 6)))
-                     ->add('date', 'date')
-                     ->add('save', 'submit')
-                     ->add('reset', 'submit', array('label' => 'Cancel'))
+                     ->add('date', DateType::class)
+                     ->add('save', SubmitType::class)
+                     ->add('reset', SubmitType::class, array('label' => 'Cancel'))
                      ->getForm();
         
         $form->handleRequest($request);
@@ -389,11 +394,11 @@ class DefaultController extends Controller
     
     private function editFeedback($activity, $feedback, $request) {
         $form = $this->createFormBuilder($feedback)
-                     ->add('text', 'textarea', array(
+                     ->add('text', TextareaType::class, array(
                             'attr' => array('row' => 6)))
-                     ->add('date', 'date')
-                     ->add('save', 'submit')
-                     ->add('reset', 'submit', array('label' => 'Cancel'))
+                     ->add('date', DateType::class)
+                     ->add('save', SubmitType::class)
+                     ->add('reset', SubmitType, array('label' => 'Cancel'))
                      ->getForm();
         
         $form->handleRequest($request);
