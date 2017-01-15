@@ -46,7 +46,7 @@
                 <ul>
                 {% for key in ['Openness', 'Conscientiousness', 'Extraversion', 'Agreeableness', 'Emotional Range'] %}
                     <li>{{ key }}: {{ tones[key] }}
-                        {% include '/help/tone_'~key|lower|replace(' ', '_')~'.html.twig' with {'size': 'small'} %}
+                        {% include '/help/tone_'~key|lower|replace({' ':'_'})~'.html.twig' with {'size': 'small'} %}
                     </li>
                 {% endfor %}
                 </ul>                

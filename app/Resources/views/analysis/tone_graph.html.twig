@@ -1,8 +1,8 @@
 
 <script>
-    google.charts.setOnLoadCallback(drawChart{{key|replace(' ','_')}});
+    google.charts.setOnLoadCallback(drawChart{{key|replace({' ':'_'})}});
 
-    function drawChart{{key|replace(' ','_')}}() {
+    function drawChart{{key|replace({' ':'_'})}}() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Tone');
         data.addColumn('number', '');
@@ -22,7 +22,7 @@
 
                };
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_{{key|replace(' ','_')}}'));
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_{{key|replace({' ':'_'})}}'));
         google.visualization.events.addListener(chart, 'select', selectHandler); 
 
         function selectHandler(e)     {   
@@ -33,4 +33,4 @@
     }
 </script>
                     
-<div style="display: inline-block" id="chart_div_{{key|replace(' ','_')}}"></div>
+<div style="display: inline-block" id="chart_div_{{key|replace({' ':'_'})}}"></div>
