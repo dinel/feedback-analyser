@@ -29,6 +29,15 @@
         
     <div class='row voffset4'>
         <div class="col-md-2">
+            <h4>User</h4>
+         </div>
+        <div class="col-md-8">
+            <a href="{{ path('user_details', {'id' : feedback.user.id}) }}">{{ feedback.user.identifier }}</a>
+        </div>
+    </div>
+        
+    <div class='row voffset4'>
+        <div class="col-md-2">
             <h4>Tones</h4>
          </div>
         <div class="col-md-8">
