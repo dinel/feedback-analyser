@@ -57,6 +57,55 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Feedback", mappedBy="user")
      */
     protected $feedbacks;
+    
+    /**
+     * This is used to identify the user. It can be the student number, 
+     * full name, or some kind of unique string used 
+     * @ORM\Column(type="string", length=1024, nullable=true)
+     */
+    protected $identifier;
+    
+    /**
+     * @ORM\Column(type="string", length=1024, nullable=true)
+     */
+    protected $name_of_school;
+    
+    /**
+     * @ORM\Column(type="string", length=1024, nullable=true)
+     */
+    protected $level_of_study;
+    
+    /**
+     * @ORM\Column(type="string", length=1024, nullable=true)
+     */
+    protected $title_of_course;
+    
+    /**
+     * @ORM\Column(type="string", length=1024, nullable=true)
+     */
+    protected $gender;
+    
+    /**
+     * @ORM\Column(type="string", length=1024, nullable=true)
+     */
+    protected $age;
+    
+    /**
+     * @ORM\Column(type="string", length=1024, nullable=true)
+     */
+    protected $ethnic_origin;
+    
+    /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    protected $disability;
+    
+    /**
+     * Only the first part of the postcode
+     * @ORM\Column(type="string", length=1024, nullable=true)
+     */
+    protected $postcode;        
+    
 
     public function __construct()
     {
@@ -142,5 +191,221 @@ class User extends BaseUser
     public function getPoints()
     {
         return $this->points;
+    }
+
+    /**
+     * Set identifier
+     *
+     * @param string $identifier
+     *
+     * @return User
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+
+        return $this;
+    }
+
+    /**
+     * Get identifier
+     *
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * Set nameOfSchool
+     *
+     * @param string $nameOfSchool
+     *
+     * @return User
+     */
+    public function setNameOfSchool($nameOfSchool)
+    {
+        $this->name_of_school = $nameOfSchool;
+
+        return $this;
+    }
+
+    /**
+     * Get nameOfSchool
+     *
+     * @return string
+     */
+    public function getNameOfSchool()
+    {
+        return $this->name_of_school;
+    }
+
+    /**
+     * Set levelOfStudy
+     *
+     * @param string $levelOfStudy
+     *
+     * @return User
+     */
+    public function setLevelOfStudy($levelOfStudy)
+    {
+        $this->level_of_study = $levelOfStudy;
+
+        return $this;
+    }
+
+    /**
+     * Get levelOfStudy
+     *
+     * @return string
+     */
+    public function getLevelOfStudy()
+    {
+        return $this->level_of_study;
+    }
+
+    /**
+     * Set titleOfCourse
+     *
+     * @param string $titleOfCourse
+     *
+     * @return User
+     */
+    public function setTitleOfCourse($titleOfCourse)
+    {
+        $this->title_of_course = $titleOfCourse;
+
+        return $this;
+    }
+
+    /**
+     * Get titleOfCourse
+     *
+     * @return string
+     */
+    public function getTitleOfCourse()
+    {
+        return $this->title_of_course;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param string $gender
+     *
+     * @return User
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Set age
+     *
+     * @param string $age
+     *
+     * @return User
+     */
+    public function setAge($age)
+    {
+        $this->age = $age;
+
+        return $this;
+    }
+
+    /**
+     * Get age
+     *
+     * @return string
+     */
+    public function getAge()
+    {
+        return $this->age;
+    }
+
+    /**
+     * Set ethnicOrigin
+     *
+     * @param string $ethnicOrigin
+     *
+     * @return User
+     */
+    public function setEthnicOrigin($ethnicOrigin)
+    {
+        $this->ethnic_origin = $ethnicOrigin;
+
+        return $this;
+    }
+
+    /**
+     * Get ethnicOrigin
+     *
+     * @return string
+     */
+    public function getEthnicOrigin()
+    {
+        return $this->ethnic_origin;
+    }
+
+    /**
+     * Set disability
+     *
+     * @param string $disability
+     *
+     * @return User
+     */
+    public function setDisability($disability)
+    {
+        $this->disability = $disability;
+
+        return $this;
+    }
+
+    /**
+     * Get disability
+     *
+     * @return string
+     */
+    public function getDisability()
+    {
+        return $this->disability;
+    }
+
+    /**
+     * Set postcode
+     *
+     * @param string $postcode
+     *
+     * @return User
+     */
+    public function setPostcode($postcode)
+    {
+        $this->postcode = $postcode;
+
+        return $this;
+    }
+
+    /**
+     * Get postcode
+     *
+     * @return string
+     */
+    public function getPostcode()
+    {
+        return $this->postcode;
     }
 }
