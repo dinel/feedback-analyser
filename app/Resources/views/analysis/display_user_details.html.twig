@@ -1,0 +1,70 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}    
+{% endblock stylesheets %}
+
+{% block body %}
+
+<div class="container">
+    <div class='row voffset5'>
+        <div class="col-md-2">
+            <b>User identifier</b>
+         </div>
+        <div class="col-md-8">
+        {{ user.identifier }}
+        </div>
+    </div>
+    <div class='row voffset1'>
+        <div class="col-md-2">
+            <b>Gender</b>
+         </div>
+        <div class="col-md-8">
+        {{ user.gender }}
+        </div>
+    </div>
+    <div class='row voffset1'>
+        <div class="col-md-2">
+            <b>Disability</b>
+         </div>
+        <div class="col-md-8">
+        {{ user.disability }}
+        </div>
+    </div>
+    <div class='row voffset1'>
+        <div class="col-md-2">
+            <b>Ethnic origin</b>
+         </div>
+        <div class="col-md-8">
+        {{ user.ethnicOrigin }}
+        </div>
+    </div>        
+    <div class='row voffset1'>
+        <div class="col-md-2">
+            <b>Activities</b>
+         </div>
+        <div class="col-md-8">
+            <ul>
+            {% for feedback in user.feedbacks %}
+                <li><a href="{{ path('display_feedback', {'id_feedback' : feedback.id}) }}">{{ feedback.activity.name }}</a> 
+                    on {{ feedback.activity.date|date("d/m/Y") }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+            
+    <div class='row voffset4'>
+        <div class="col-md-2">
+            <h4><a href="javascript:history.go(-1)">[Go Back]</a></h4>
+         </div>
+    </div>
+    
+</div>
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
