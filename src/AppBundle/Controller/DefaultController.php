@@ -284,6 +284,23 @@ class DefaultController extends Controller
             ));
         }
     }
+    
+    /**
+     * @Route("/analysis/user/{id}", name="user_details")
+     */
+    public function getUserDetailsAction($id) {
+        $user = $this->getDoctrine()
+                     ->getRepository('AppBundle:User')
+                     ->find($id);
+        
+        if(! $user) {
+            return $this->redirectToRoute("homepage");
+        }
+        
+        return $this->render('analysis/display_user_details.html.twig', array(
+            'user' => $user,
+        ));        
+    }
 
 
     /************************************************************************
