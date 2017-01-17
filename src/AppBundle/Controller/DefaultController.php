@@ -250,6 +250,7 @@ class DefaultController extends Controller
                          ->getRepository('AppBundle:Activity')
                          ->find($id_activity);
         $concordances = array();
+        $users = array();
         $max_len = 50;
         
         if($activity) {
@@ -274,13 +275,38 @@ class DefaultController extends Controller
                         
                         $concordance = $prev . " <strong>" . $a_text[$i] . "</strong> " . $next;
                         $concordances[] = array($concordance, $feedback->getId());
+                        
+                        if(! in_array($feedback->getUser(), $users)) {
+                            $users[] = $feedback->getUser();
+                        }
                     }
                 }                
+            }
+            
+            // compute statistics
+            $stats = array();
+            $stats["gender"] = array();
+            foreach($users as $user) {
+                if(array_key_exists($user->getGender(), $stats["gender"])) {
+                    $stats["gender"][$user->getGender()]++;
+                } else {
+                    $stats["gender"][$user->getGender()] = 1;
+                }
+            }
+            
+            $stats["ethnicity"] = array();
+            foreach($users as $user) {
+                if(array_key_exists($user->getEthnicOrigin(), $stats["ethnicity"])) {
+                    $stats["ethnicity"][$user->getEthnicOrigin()]++;
+                } else {
+                    $stats["ethnicity"][$user->getEthnicOrigin()] = 1;
+                }
             }
             
             return $this->render('analysis/display_keyword.html.twig', array(
                 'activity' => $activity,
                 'concordances' => $concordances,
+                'stats' => $stats,
             ));
         }
     }
