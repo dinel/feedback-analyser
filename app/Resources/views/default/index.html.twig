@@ -54,7 +54,7 @@
                 <h3>Users</h3>
                 <div class="list-group voffset3">
                 {% for user in users|slice(0,10) %}
-                    <a href="#" class="list-group-item">{{ user.username }}<span class="badge">{{ user.points }}</span></a>
+                    <a href="{{ path('user_details', {'id': user.id }) }}" class="list-group-item">{{ user.identifier }}<span class="badge">{{ user.points }}</span></a>
                 {% endfor %}
                 </div>
             </div>
