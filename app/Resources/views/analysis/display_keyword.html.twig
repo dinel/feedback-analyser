@@ -8,32 +8,11 @@
 
 {% block body %}
 
-<head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" >
+    google.charts.load('current', {'packages':['corechart']});
+</script>
 
-        var data = google.visualization.arrayToDataTable([
-          ['Gender', 'Number'],
-          {% for key, value in stats["ethnicity"] %}
-             ['{{ key }}', {{ value }}],
-          {% endfor %}
-        ]);
-
-        var options = {
-          title: 'Distribution by ethnicity',
-          is3D: true,
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('gender-chart'));
-
-        chart.draw(data, options);
-      }
-    </script>
-  </head>
-    
 <div class="container">
     <div class='row voffset4'>
         <div class="col-md-2">
@@ -63,12 +42,20 @@
     </div>
             
         <div class='row voffset4'>
-        <div class="col-md-2">
-            <h4>Statistics</h4>
-         </div>
-        <div class="col-md-9">
-            <div class="list-group">
-                <div id="gender-chart" style="width: 900px; height: 500px;"></div>
+            <div class="col-md-2">
+                <h4>Statistics</h4>
+            </div>
+        </div>
+        <div class="row voffset4">
+            <div class="col-md-6">
+                <div class="list-group">
+                    {% include 'analysis/display_statistics.html.twig' with {'type':'gender', 'stats':stats} %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="list-group">
+                    {% include 'analysis/display_statistics.html.twig' with {'type':'ethnicity', 'stats':stats} %}
+                </div>
             </div>
         </div>
     </div>

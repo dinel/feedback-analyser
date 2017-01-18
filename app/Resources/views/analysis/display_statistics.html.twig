@@ -1,0 +1,27 @@
+
+
+<script type="text/javascript">  
+  google.charts.setOnLoadCallback(drawChart{{type}});
+
+  function drawChart{{type}}() {
+
+    var data = google.visualization.arrayToDataTable([
+      ['Gender', 'Number'],
+      {% for key, value in stats[type] %}
+         ['{{ key }}', {{ value }}],
+      {% endfor %}
+    ]);
+
+    var options = {
+      title: 'Distribution by {{type}}',
+      is3D: true,
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('{{type}}-chart'));
+
+    chart.draw(data, options);
+  }
+</script>
+ 
+  
+<div id="{{type}}-chart" style="width: 700px; height: 500px;"></div>
