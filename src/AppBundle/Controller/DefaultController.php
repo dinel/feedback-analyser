@@ -478,7 +478,7 @@ class DefaultController extends Controller
             $a_text = $tokenizer->tokenize($feedback->getText());
             foreach ($a_text as $word) {
                 if(array_key_exists(strtolower($word), $stopwords) ||
-                   stristr(",.?!'’:“”-_–…()/", $word)) {
+                   stristr(",.?!'’:“”-_–…()/\\", $word)) {
                     continue;
                 }
                 
