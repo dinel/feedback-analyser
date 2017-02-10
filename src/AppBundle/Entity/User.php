@@ -96,7 +96,7 @@ class User extends BaseUser
     protected $ethnic_origin;
     
     /**
-     * @ORM\Column(type="string", length=2, nullable=true)
+     * @ORM\Column(type="string", length=16, nullable=true)
      */
     protected $disability;
     
