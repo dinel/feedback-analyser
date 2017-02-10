@@ -441,7 +441,7 @@ class DefaultController extends Controller
                             'attr' => array('row' => 6)))
                      ->add('date', DateType::class)
                      ->add('save', SubmitType::class)
-                     ->add('reset', SubmitType, array('label' => 'Cancel'))
+                     ->add('reset', SubmitType::class, array('label' => 'Cancel'))
                      ->getForm();
         
         $form->handleRequest($request);
