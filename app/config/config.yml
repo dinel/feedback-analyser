@@ -47,7 +47,7 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-        
+        server_version: 5.5
 
         
         # if using pdo_sqlite as your database driver:
