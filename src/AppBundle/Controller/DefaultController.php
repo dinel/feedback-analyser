@@ -466,6 +466,7 @@ class DefaultController extends Controller
         
         return $this->render('admin/feedback.html.twig', array(
                 'form' => $form->createView(),
+                'desc_activity' => $activity->getDescription(),
         ));
     }
     
