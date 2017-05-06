@@ -461,7 +461,7 @@ class DefaultController extends Controller
                 $em->flush();
             }
             
-            return $this->redirectToRoute("homepage");
+            return $this->redirectToRoute("fos_user_security_logout");
         }
         
         return $this->render('admin/feedback.html.twig', array(
