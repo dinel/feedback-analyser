@@ -454,7 +454,7 @@ class DefaultController extends Controller
                     $feedback->setActivity($activity);
                     $activity->addFeedback($feedback);
                 }
-                $feedback->setJsonAnalysis();
+                //$feedback->setJsonAnalysis($this->container);
                 
                 $em->persist($feedback);
                 $em->persist($activity);
